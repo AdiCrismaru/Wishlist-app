@@ -6,6 +6,8 @@ import Wishlist from "./routes/Wishlist";
 import Register from "./routes/Register";
 import ErrorPage from "./routes/ErrorPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { UserContext } from "./context/UserContext";
+import { useState } from "react";
 
 function App() {
   return (

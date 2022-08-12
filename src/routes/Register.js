@@ -1,4 +1,4 @@
-import { React, useRef, useState, useEffect } from "react";
+import { React, useRef, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../components/Button";
 import {
@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const USER_REGEX = /^[A-Za-z][A-Za-z0-9_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
 export default function Register() {
   const navigate = useNavigate();
@@ -26,9 +27,9 @@ export default function Register() {
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
-  // const [matchPwd, setMatchPwd] = useState();
-  // const [validMatch, setValidMatch] = useState(false);
-  // const [matchFocus, setMatchFocus] = useState(false);
+  const [email, setEmail] = useState();
+  const [validEmail, setValidEmail] = useState(false);
+  const [emailFocus, setEmailFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState();
   const [success, setSuccess] = useState(false);
@@ -39,17 +40,18 @@ export default function Register() {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    console.log(result);
-    console.log(user);
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-    console.log(result);
-    console.log(pwd);
     setValidPwd(result);
   }, [pwd]);
+
+  useEffect(() => {
+    const result = EMAIL_REGEX.test(email);
+    setValidEmail(result);
+  }, [email]);
 
   useEffect(() => {
     setErrMsg("");
@@ -62,19 +64,64 @@ export default function Register() {
       </p>
       <h1>Register</h1>
       <form>
+        <label htmlFor="firstname">First name:</label>
+        <input
+          type="text"
+          id="firstname"
+          ref={userRef}
+          autoComplete="off"
+          required
+        ></input>
+        <label htmlFor="lastname">Last name:</label>
+        <input type="text" id="lastname" autoComplete="off" required></input>
+        <label htmlFor="dob">Date of birth:</label>
+        <input type="date" id="dob" autoComplete="off" required></input>
+        <label htmlFor="email">
+          Email:
+          <span className={validEmail ? "valid" : "hide"}>
+            <FontAwesomeIcon icon={faCheck} />
+          </span>
+          <span className={validEmail || !email ? "hide" : "invalid"}>
+            <FontAwesomeIcon icon={faTimes} />
+          </span>
+        </label>
+        <input
+          type="text"
+          id="email"
+          autoComplete="off"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          required
+          onFocus={() => {
+            setEmailFocus(true);
+          }}
+          onBlur={() => {
+            setEmailFocus(false);
+          }}
+        ></input>
+        <p
+          id="emailnote"
+          className={
+            emailFocus && email && !validEmail ? "instructions" : "offscreen"
+          }
+        >
+          <FontAwesomeIcon icon={faInfoCircle} />
+          Invalid email!
+        </p>
+
         <label htmlFor="username">
-          Username:{" "}
+          Username:
           <span className={validName ? "valid" : "hide"}>
             <FontAwesomeIcon icon={faCheck} />
           </span>
           <span className={validName || !user ? "hide" : "invalid"}>
             <FontAwesomeIcon icon={faTimes} />
-          </span>{" "}
+          </span>
         </label>
         <input
           type="text"
           id="username"
-          ref={userRef}
           autoComplete="off"
           onChange={(e) => {
             setUser(e.target.value);
@@ -132,12 +179,21 @@ export default function Register() {
           !@#$%
         </p>
       </form>
-      <OutlinedButton
-        text="Back"
-        click={() => {
-          navigate("/");
-        }}
-      />
+      <div className="btns">
+        <OutlinedButton
+          text="Back"
+          click={() => {
+            navigate("/");
+          }}
+        />
+
+        <OutlinedButton
+          text="Register"
+          click={() => {
+            navigate("/wishlist");
+          }}
+        />
+      </div>
     </section>
   );
 }

@@ -25,6 +25,7 @@ form {
 }
 
 input[type="text"],
+input[type="date"],
 input[type="password"],
 button,
 textarea {
@@ -86,4 +87,8 @@ button {
 
 .line {
   display: inline-block;
+}
+.btns {
+  display: flex;
+  justify-content: space-between;
 }
