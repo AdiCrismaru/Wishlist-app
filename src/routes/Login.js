@@ -4,7 +4,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import Register from "./Register";
 import OutlinedButton from "../components/Button";
-import "../css/Login.css";
+import "../css/Login&Register.css";
 
 export default function Login() {
   const { setAuth } = useContext(AuthContext);
@@ -42,7 +42,7 @@ export default function Login() {
       <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
         {errMsg}
       </p>
-      <h1>Please Sign In to continue.</h1>
+      <h1>Sign in to continue.</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username:</label>
         <input
@@ -71,7 +71,7 @@ export default function Login() {
         />
       </form>
       <p>
-        Need an Account?
+        Don't have an account?
         <br />
         <span className="line">
           <Routes>
@@ -83,7 +83,7 @@ export default function Login() {
               navigate("/register");
             }}
           >
-            Sign Up
+            Create one
           </a>
         </span>
       </p>

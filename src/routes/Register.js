@@ -1,6 +1,7 @@
 import { React, useRef, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../components/Button";
+import "../css/Login&Register.css";
 import {
   faCheck,
   faTimes,
@@ -58,11 +59,11 @@ export default function Register() {
   }, [user, pwd]);
 
   return (
-    <section>
+    <section className="register-container">
       <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
         {errMsg}
       </p>
-      <h1>Register</h1>
+      <h1>Create an account:</h1>
       <form>
         <label htmlFor="firstname">First name:</label>
         <input

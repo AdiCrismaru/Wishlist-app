@@ -5,7 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: linear-gradient(to bottom right, #83eaf1, #63a4ff);
+  background-image: linear-gradient(to bottom right, #f5e3e6, #d9e4f5);
 }
 
 nav {
@@ -13,7 +13,7 @@ nav {
   justify-content: space-around;
   align-items: center;
   min-height: 10vh;
-  background-color: rgb(73, 79, 82);
+  background-color: #9678b6;
   color: white;
 }
 nav > img {
@@ -29,4 +29,5 @@ nav > img {
 .link {
   color: white;
   text-decoration: none;
+  font-size: large;
 }
