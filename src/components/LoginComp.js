@@ -2,20 +2,20 @@ import React from "react";
 import { useState, useRef, useEffect, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
-import Register from "./Register";
+import RegisterPage from "../routes/RegisterPage";
 import OutlinedButton from "../components/Button";
-import "../css/Login&Register.css";
+import "./Login&Register.css";
 
-export default function Login() {
-  const { setAuth } = useContext(AuthContext);
+export default function LoginComp() {
+  //   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  // Change false value to route to home page
-  const [success, setSuccess] = useState(false);
+
+  //   const [success, setSuccess] = useState(false);
 
   let navigate = useNavigate();
 
@@ -75,7 +75,7 @@ export default function Login() {
         <br />
         <span className="line">
           <Routes>
-            <Route path="/register" element={<Register />}></Route>
+            <Route path="/register" element={<RegisterPage />}></Route>
           </Routes>
           <a
             href="/register"

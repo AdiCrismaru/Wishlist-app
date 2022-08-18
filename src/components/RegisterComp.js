@@ -1,12 +1,11 @@
-import { React, useRef, useState, useEffect, useContext } from "react";
+import { React, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../components/Button";
-import "../css/Login&Register.css";
+import "./Login&Register.css";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
-  faL,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,7 +13,7 @@ const USER_REGEX = /^[A-Za-z][A-Za-z0-9_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-export default function Register() {
+export default function RegisterComp() {
   const navigate = useNavigate();
 
   const userRef = useRef();
@@ -33,7 +32,7 @@ export default function Register() {
   const [emailFocus, setEmailFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState();
-  const [success, setSuccess] = useState(false);
+  //   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();

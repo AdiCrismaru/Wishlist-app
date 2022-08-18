@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Profile from "../routes/Profile";
 
 export default function Nav() {
   return (

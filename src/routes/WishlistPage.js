@@ -1,12 +1,12 @@
 import React from "react";
 import Nav from "../components/Nav";
 
-export default function Groups() {
+export default function WishlistPage() {
   return (
     <div>
       <Nav />
-      <h1>My groups</h1>
-      <h1>Create group</h1>
+      <h1>My wishlists</h1>
+      <h1>Create wishlist</h1>
     </div>
   );
 }

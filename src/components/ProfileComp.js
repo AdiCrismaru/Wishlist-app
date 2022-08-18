@@ -1,13 +1,12 @@
 import React from "react";
-import "../css/Profile.css";
+import "./Profile.css";
 import { useNavigate } from "react-router-dom";
-import Nav from "../components/Nav";
+import Nav from "./Nav";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Profile() {
+function Profile() {
   const navigate = useNavigate();
-
   return (
     <div>
       <Nav />
@@ -86,3 +85,5 @@ export default function Profile() {
     </div>
   );
 }
+
+export default Profile;

@@ -1,23 +1,20 @@
-import Nav from "./components/Nav";
-import Groups from "./routes/Groups";
-import Login from "./routes/Login";
-import Profile from "./routes/Profile";
-import Wishlist from "./routes/Wishlist";
-import Register from "./routes/Register";
+import GroupsPage from "./routes/GroupsPage";
+import LoginPage from "./routes/LoginPage";
+import ProfilePage from "./routes/ProfilePage";
+import WishlistPage from "./routes/WishlistPage";
+import RegisterPage from "./routes/RegisterPage";
 import ErrorPage from "./routes/ErrorPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserContext } from "./context/UserContext";
-import { useState } from "react";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/groups" element={<Groups />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/wishlist" element={<WishlistPage />} />
+        <Route path="/groups" element={<GroupsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
