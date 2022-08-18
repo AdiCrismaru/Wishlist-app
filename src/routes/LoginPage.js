@@ -1,6 +1,6 @@
 import React from "react";
-import LoginComp from "../components/LoginComp";
+import Login from "../components/Login";
 
 export default function LoginPage() {
-  return <LoginComp />;
+  return <Login />;
 }

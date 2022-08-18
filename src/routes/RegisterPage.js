@@ -1,6 +1,6 @@
 import React from "react";
-import RegisterComp from "../components/RegisterComp";
+import Register from "../components/Register";
 
 export default function RegisterPage() {
-  return <RegisterComp />;
+  return <Register />;
 }

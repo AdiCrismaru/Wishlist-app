@@ -3,10 +3,10 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthProvider";
 import RegisterPage from "../routes/RegisterPage";
-import OutlinedButton from "../components/Button";
+import OutlinedButton from "./Button";
 import "./Login&Register.css";
 
-export default function LoginComp() {
+export default function Login() {
   //   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
