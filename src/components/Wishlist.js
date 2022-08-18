@@ -1,18 +1,22 @@
 import React from "react";
-import { useState } from "react";
+import AddNote from "./AddNote";
+import Note from "./Note";
+import "./Wishlist.css";
 
-function WishlistComp() {
-  const [showDiv, setShowDiv] = useState(false);
-  const modalHandler = () => {
-    setShowDiv(true);
-  };
+function Wishlist({ notes, handleAddNote, handleDeleteNote }) {
   return (
-    <div className="w-comp">
-      <button onClick={modalHandler} className={showDiv ? "red" : ""}>
-        +
-      </button>
+    <div className="notes-list">
+      {notes.map((note) => (
+        <Note
+          id={note.id}
+          text={note.text}
+          date={note.date}
+          handleDeleteNote={handleDeleteNote}
+        />
+      ))}
+      <AddNote handleAddNote={handleAddNote} />
     </div>
   );
 }
 
-export default WishlistComp;
+export default Wishlist;

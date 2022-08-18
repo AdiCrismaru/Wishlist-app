@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useRef, useEffect, useContext } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
 import RegisterPage from "../routes/RegisterPage";
 import OutlinedButton from "./Button";
 import "./Login&Register.css";

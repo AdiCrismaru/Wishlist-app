@@ -1,0 +1,25 @@
+.notes-list {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.wishlist-container {
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 40px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+.note.new {
+  background-color: #67d7cc;
+}
+textarea {
+  background-color: #67d7cc;
+  border: none;
+  resize: none;
+}
+textarea:focus {
+  outline: none;
+}

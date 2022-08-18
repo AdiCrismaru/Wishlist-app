@@ -4,6 +4,7 @@ import ProfilePage from "./routes/ProfilePage";
 import WishlistPage from "./routes/WishlistPage";
 import RegisterPage from "./routes/RegisterPage";
 import ErrorPage from "./routes/ErrorPage";
+import Wishlist from "./components/Wishlist";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
