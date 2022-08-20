@@ -19,8 +19,10 @@ export default function Register() {
   const userRef = useRef();
   const errRef = useRef();
 
+  const emptyString = "";
+
   const [user, setUser] = useState();
-  const [validName, setValidName] = useState(false);
+  const [validUser, setValidUser] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
   const [pwd, setPwd] = useState();
@@ -40,7 +42,7 @@ export default function Register() {
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-    setValidName(result);
+    setValidUser(result);
   }, [user]);
 
   useEffect(() => {
@@ -112,10 +114,10 @@ export default function Register() {
 
         <label htmlFor="username">
           Username:
-          <span className={validName ? "valid" : "hide"}>
+          <span className={validUser && !emptyString ? "valid" : "hide"}>
             <FontAwesomeIcon icon={faCheck} />
           </span>
-          <span className={validName || !user ? "hide" : "invalid"}>
+          <span className={validUser || !user ? "hide" : "invalid"}>
             <FontAwesomeIcon icon={faTimes} />
           </span>
         </label>
@@ -137,13 +139,12 @@ export default function Register() {
         <p
           id="uidnote"
           className={
-            userFocus && user && !validName ? "instructions" : "offscreen"
+            userFocus && user && !validUser ? "instructions" : "offscreen"
           }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
           4 to 24 characters. <br />
           Must begin with a letter. <br />
-          Must contain a number.
         </p>
 
         <label htmlFor="password">

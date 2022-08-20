@@ -7,22 +7,22 @@ export default function WishlistPage() {
   const [notes, setNotes] = useState([
     {
       id: nanoid(),
-      text: "This is my first note.",
+      text: "Bicicleta noua.",
       date: "18/08/2022",
     },
     {
       id: nanoid(),
-      text: "This is my second note.",
+      text: "Minge de baschet.",
       date: "19/08/2022",
     },
     {
       id: nanoid(),
-      text: "This is my third note.",
+      text: "Softbinator React Dev.",
       date: "20/08/2022",
     },
     {
       id: nanoid(),
-      text: "This is my fourth note.",
+      text: "Stergatoare parbriz.",
       date: "21/08/2022",
     },
   ]);
