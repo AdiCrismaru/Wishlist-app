@@ -6,15 +6,12 @@ import OutlinedButton from "./Button";
 import "./Login&Register.css";
 
 export default function Login() {
-  //   const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errRef = useRef();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
-  //   const [success, setSuccess] = useState(false);
 
   let navigate = useNavigate();
 
@@ -28,12 +25,6 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // try {
-    //   const response = await setUser("");
-    //   setPwd("");
-    //   setSuccess(true);
-    // } catch (err) {}
   };
 
   return (
