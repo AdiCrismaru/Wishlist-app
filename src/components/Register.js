@@ -19,8 +19,6 @@ export default function Register() {
   const userRef = useRef();
   const errRef = useRef();
 
-  const emptyString = "";
-
   const [user, setUser] = useState();
   const [validUser, setValidUser] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
@@ -114,7 +112,7 @@ export default function Register() {
 
         <label htmlFor="username">
           Username:
-          <span className={validUser && !emptyString ? "valid" : "hide"}>
+          <span className={validUser ? "valid" : "hide"}>
             <FontAwesomeIcon icon={faCheck} />
           </span>
           <span className={validUser || !user ? "hide" : "invalid"}>

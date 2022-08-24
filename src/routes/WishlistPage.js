@@ -8,21 +8,6 @@ export default function WishlistPage() {
     {
       id: nanoid(),
       text: "Bicicleta noua.",
-      date: "18/08/2022",
-    },
-    {
-      id: nanoid(),
-      text: "Minge de baschet.",
-      date: "19/08/2022",
-    },
-    {
-      id: nanoid(),
-      text: "Softbinator React Dev.",
-      date: "20/08/2022",
-    },
-    {
-      id: nanoid(),
-      text: "Stergatoare parbriz.",
       date: "21/08/2022",
     },
   ]);
