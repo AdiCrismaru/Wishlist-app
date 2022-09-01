@@ -1,25 +1,17 @@
-.notes-list {
-  display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.item-list {
+  display: flex;
+  justify-content: space-between;
+  margin: 80px 100px;
+}
+.individual-list {
+  background-color: bisque;
+  display: flex;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 20px;
 }
 
-.wishlist-container {
-  max-width: 960px;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 40px;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-.note.new {
-  background-color: #9e83bc;
-}
-textarea {
-  background-color: #9e83bc;
-  border: none;
-  resize: none;
-}
-textarea:focus {
-  outline: none;
+.map-input {
+  margin-left: 20px;
+  margin-right: 10px;
 }

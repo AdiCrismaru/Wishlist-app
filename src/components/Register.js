@@ -8,10 +8,12 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "../api/axios";
 
-const USER_REGEX = /^[A-Za-z][A-Za-z0-9_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+
+const REGISTER_URL = "/register";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -19,29 +21,23 @@ export default function Register() {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [user, setUser] = useState();
-  const [validUser, setValidUser] = useState(false);
-  const [userFocus, setUserFocus] = useState(false);
-
-  const [pwd, setPwd] = useState();
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
-
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState("");
   const [validEmail, setValidEmail] = useState(false);
   const [emailFocus, setEmailFocus] = useState(false);
 
+  const [pwd, setPwd] = useState("");
+  const [validPwd, setValidPwd] = useState(false);
+  const [pwdFocus, setPwdFocus] = useState(false);
+
+  const [dob, setDob] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+
   const [errMsg, setErrMsg] = useState();
-  //   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
-
-  useEffect(() => {
-    const result = USER_REGEX.test(user);
-    setValidUser(result);
-  }, [user]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
@@ -55,7 +51,65 @@ export default function Register() {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd]);
+  }, [email, pwd]);
+
+  const [data, setData] = useState({
+    email,
+    password: pwd,
+    dob,
+    name,
+    phone,
+  });
+
+  const handle = (e) => {
+    const newdata = { ...data };
+    newdata[e.target.id] = e.target.value;
+    setData(newdata);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // axios
+    //   .post(REGISTER_URL, {
+    //     email: data.email,
+    //     password: data.password,
+    //     dob: data.dob,
+    //     name: data.name,
+    //     phone: data.phone,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
+    const v1 = EMAIL_REGEX.test(email);
+    const v2 = PWD_REGEX.test(pwd);
+    if (!v1 || !v2) {
+      setErrMsg("Invalid entry!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(REGISTER_URL, {
+        email: data.email,
+        password: data.password,
+        dob: data.dob,
+        name: data.name,
+        phone: data.phone,
+      });
+      setErrMsg(response.data.errors);
+      console.log(response.data);
+      if (response.data.id) {
+        navigate("/");
+      }
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No server response");
+      } else if (err.response?.status === 409) {
+        setErrMsg("Email already in use.");
+      } else {
+        setErrMsg("Registration failed.");
+      }
+    }
+  };
 
   return (
     <section className="register-container">
@@ -64,18 +118,6 @@ export default function Register() {
       </p>
       <h1>Create an account:</h1>
       <form>
-        <label htmlFor="firstname">First name:</label>
-        <input
-          type="text"
-          id="firstname"
-          ref={userRef}
-          autoComplete="off"
-          required
-        ></input>
-        <label htmlFor="lastname">Last name:</label>
-        <input type="text" id="lastname" autoComplete="off" required></input>
-        <label htmlFor="dob">Date of birth:</label>
-        <input type="date" id="dob" autoComplete="off" required></input>
         <label htmlFor="email">
           Email:
           <span className={validEmail ? "valid" : "hide"}>
@@ -88,10 +130,13 @@ export default function Register() {
         <input
           type="text"
           id="email"
+          ref={userRef}
           autoComplete="off"
           onChange={(e) => {
             setEmail(e.target.value);
+            handle(e);
           }}
+          value={data.email}
           required
           onFocus={() => {
             setEmailFocus(true);
@@ -109,42 +154,6 @@ export default function Register() {
           <FontAwesomeIcon icon={faInfoCircle} />
           Invalid email!
         </p>
-
-        <label htmlFor="username">
-          Username:
-          <span className={validUser ? "valid" : "hide"}>
-            <FontAwesomeIcon icon={faCheck} />
-          </span>
-          <span className={validUser || !user ? "hide" : "invalid"}>
-            <FontAwesomeIcon icon={faTimes} />
-          </span>
-        </label>
-        <input
-          type="text"
-          id="username"
-          autoComplete="off"
-          onChange={(e) => {
-            setUser(e.target.value);
-          }}
-          required
-          onFocus={() => {
-            setUserFocus(true);
-          }}
-          onBlur={() => {
-            setUserFocus(false);
-          }}
-        ></input>
-        <p
-          id="uidnote"
-          className={
-            userFocus && user && !validUser ? "instructions" : "offscreen"
-          }
-        >
-          <FontAwesomeIcon icon={faInfoCircle} />
-          4 to 24 characters. <br />
-          Must begin with a letter. <br />
-        </p>
-
         <label htmlFor="password">
           Password:
           <span className={validPwd ? "valid" : "hide"}>
@@ -159,7 +168,9 @@ export default function Register() {
           id="password"
           onChange={(e) => {
             setPwd(e.target.value);
+            handle(e);
           }}
+          value={data.password}
           required
           onFocus={() => {
             setPwdFocus(true);
@@ -177,6 +188,44 @@ export default function Register() {
           Must include uppercase and lowercase, a number and a special character
           !@#$%
         </p>
+        <label htmlFor="dob">Date of birth:</label>
+        <input
+          type="date"
+          id="dob"
+          autoComplete="off"
+          required
+          onChange={(e) => {
+            setDob(e.target.value);
+            handle(e);
+          }}
+          value={data.dob}
+        ></input>
+
+        <label htmlFor="name">Full Name:</label>
+        <input
+          type="text"
+          id="name"
+          autoComplete="off"
+          required
+          onChange={(e) => {
+            setName(e.target.value);
+            handle(e);
+          }}
+          value={data.name}
+        ></input>
+
+        <label htmlFor="phone">Phone number:</label>
+        <input
+          type="tel"
+          id="phone"
+          autoComplete="off"
+          required
+          onChange={(e) => {
+            setPhone(e.target.value);
+            handle(e);
+          }}
+          value={data.phone}
+        ></input>
       </form>
       <div className="btns">
         <OutlinedButton
@@ -186,12 +235,7 @@ export default function Register() {
           }}
         />
 
-        <OutlinedButton
-          text="Register"
-          click={() => {
-            navigate("/wishlist");
-          }}
-        />
+        <OutlinedButton text="Register" click={handleSubmit} />
       </div>
     </section>
   );

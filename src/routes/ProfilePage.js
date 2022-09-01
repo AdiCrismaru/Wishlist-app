@@ -1,6 +1,6 @@
 import React from "react";
-import Profile from "../components/Profile";
+import ProfileGET from "../api/ProfileGET";
 
 export default function ProfilePage() {
-  return <Profile />;
+  return <ProfileGET />;
 }

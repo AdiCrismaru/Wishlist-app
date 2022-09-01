@@ -30,6 +30,7 @@ form {
 input[type="text"],
 input[type="date"],
 input[type="password"],
+input[type="tel"],
 button,
 textarea {
   font-family: "Nunito", sans-serif;

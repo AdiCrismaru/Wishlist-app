@@ -1,41 +1,14 @@
 import React from "react";
+import Modal from "../components/Modal";
 import Nav from "../components/Nav";
 import Wishlist from "../components/Wishlist";
-import { useState } from "react";
-import { nanoid } from "nanoid";
+
 export default function WishlistPage() {
-  const [notes, setNotes] = useState([
-    {
-      id: nanoid(),
-      text: "Bicicleta noua.",
-      date: "21/08/2022",
-    },
-  ]);
-
-  const addNote = (text) => {
-    const date = new Date();
-    const newNote = {
-      id: nanoid,
-      text: text,
-      date: date.toLocaleDateString(),
-    };
-    const newNotes = [...notes, newNote];
-    setNotes(newNotes);
-  };
-
-  const deleteNote = (id) => {
-    const newNotes = notes.filter((note) => note.id !== id);
-    setNotes(newNotes);
-  };
   return (
     <div>
       <Nav />
       <div className="wishlist-container">
-        <Wishlist
-          notes={notes}
-          handleAddNote={addNote}
-          handleDeleteNote={deleteNote}
-        />
+        <Wishlist />
       </div>
     </div>
   );
