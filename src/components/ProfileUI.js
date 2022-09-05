@@ -1,83 +1,105 @@
 import React from "react";
-import "./Profile.css";
-import { useNavigate } from "react-router-dom";
-import Nav from "./Nav";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUpRightFromSquare,
+  faUser,
+  faUserPen,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Nav from "./Nav";
+import "./Profile.css";
+import Moment from "moment";
 
-function ProfileUI(props) {
-  const navigate = useNavigate();
+function ProfileUI({
+  name,
+  email,
+  phone,
+  dob,
+  modal,
+
+  toggleModal,
+  handleSubmit,
+  logoutHandle,
+  changeNameHandler,
+  changePhoneHandler,
+  changeDobHandler,
+}) {
+  const formatDate = Moment(dob).format("Do-MMM-YYYY");
+
   return (
     <div>
       <Nav />
-      <div className="profile-container">
-        <div className="w-25 mt-4">
-          <div className="card mb-4">
-            <div className="card-body text-center">
-              <FontAwesomeIcon icon={faUser} size="8x" />
-              <h5 className="my-3">{props.name}</h5>
-              <a
-                href="/"
-                onClick={() => {
-                  navigate("/");
-                }}
-              >
-                Logout
-              </a>
+
+      {modal && (
+        <div className="modall">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modal-content">
+            <input
+              name="name"
+              value={name}
+              onChange={changeNameHandler}
+              type="text"
+              placeholder="Name"
+              autoComplete="off"
+            ></input>
+            <div className="user-input">
+              <form onSubmit={handleSubmit}>
+                <input
+                  name="phone"
+                  value={phone}
+                  onChange={changePhoneHandler}
+                  type="tel"
+                  placeholder="Phone"
+                  autoComplete="off"
+                ></input>
+                <input
+                  name="dob"
+                  value={dob}
+                  onChange={changeDobHandler}
+                  type="date"
+                ></input>
+              </form>
+            </div>
+            <div className="btns-div">
+              <button onClick={toggleModal}>Discard</button>
+              <button onClick={handleSubmit}>Save</button>
             </div>
           </div>
         </div>
+      )}
 
-        <div className="col-lg-4">
-          <div className="card mb-4">
-            <div className="card-body">
-              <div className="row">
-                <div className="col-sm-3">
-                  <p className="mb-0">Name:</p>
-                </div>
-                <div className="col-sm-9">
-                  <p className="text-muted mb-0">{props.name}</p>
-                </div>
-              </div>
-              <hr />
-              <div className="row">
-                <div className="col-sm-3">
-                  <p className="mb-0">Email:</p>
-                </div>
-                <div className="col-sm-9">
-                  <p className="text-muted mb-0">{props.email}</p>
-                </div>
-              </div>
-              <hr />
-              <div className="row">
-                <div className="col-sm-3">
-                  <p className="mb-0">Password:</p>
-                </div>
-                <div className="col-sm-9">
-                  <p className="text-muted mb-0">{props.password}</p>
-                </div>
-              </div>
-              <hr />
-
-              <div className="row">
-                <div className="col-sm-3">
-                  <p className="mb-0">Phone:</p>
-                </div>
-                <div className="col-sm-9">
-                  <p className="text-muted mb-0">{props.phone}</p>
-                </div>
-              </div>
-              <hr />
-              <div className="row">
-                <div className="col-sm-3">
-                  <p className="mb-0">Date of birth:</p>
-                </div>
-                <div className="col-sm-9">
-                  <p className="text-muted mb-0">{props.dob}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="user-container">
+        <div className="top-div">
+          <FontAwesomeIcon icon={faUser} size="8x" />
+        </div>
+        <hr />
+        <div className="user-info">
+          <a href="/" onClick={logoutHandle}>
+            <FontAwesomeIcon icon={faUpRightFromSquare} />
+            Logout
+          </a>
+          <span className="edit" onClick={toggleModal}>
+            <FontAwesomeIcon icon={faUserPen} /> Edit
+          </span>
+        </div>
+        <hr />
+        <div className="user-info">
+          <p className="">Name:</p>
+          <p className="">{name}</p>
+        </div>
+        <hr />
+        <div className="user-info">
+          <p className="">Email:</p>
+          <p className="">{email}</p>
+        </div>
+        <hr />
+        <div className="user-info">
+          <p className="">Phone:</p>
+          <span className="">{phone}</span>
+        </div>
+        <hr />
+        <div className="user-info">
+          <p className="">Date of birth:</p>
+          <p className="">{formatDate}</p>
         </div>
       </div>
     </div>

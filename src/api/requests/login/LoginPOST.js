@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginUI from "../components/LoginUI";
-import axios from "./axios";
+import LoginUI from "../../../components/LoginUI";
+import axios from "../../axios";
 
 const LOGIN_URL = "/login";
 
@@ -17,20 +17,13 @@ const LoginPOST = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        LOGIN_URL,
-        {
-          email: email,
-          password: pwd,
-        }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
+      const response = await axios.post(LOGIN_URL, {
+        email: email,
+        password: pwd,
+      });
+
       if (response.status === 200) {
-        const token = localStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.token);
       }
 
       setErrMsg(response.data.errors);
