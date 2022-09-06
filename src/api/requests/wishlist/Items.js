@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import WishlistUI from "../../../components/WishlistUI";
 import axios from "../../axios";
+import { ItemsContext } from "../../../context/ItemsContext";
 
 export default function Items() {
   const token = localStorage.getItem("token");
 
-  const [name, setName] = useState("");
-  const [details, setDetails] = useState("");
-  const [size, setSize] = useState("");
-  const [maker, setMaker] = useState("");
-  const [model, setModel] = useState("");
-  const [link, setLink] = useState("");
-
-  const [modalId, setModalId] = useState("");
-
-  const [data, setData] = useState([]);
+  const { name, details, size, maker, model, link, setId, data, setData } =
+    useContext(ItemsContext);
 
   const [modal, setModal] = useState(false);
   const [modalPut, setModalPut] = useState(false);
@@ -97,7 +90,7 @@ export default function Items() {
   };
   const toggleModalPut = (id) => {
     setModalPut(!modalPut);
-    setModalId(id);
+    setId(id);
   };
 
   const mapData = data.map(
@@ -105,12 +98,13 @@ export default function Items() {
       return (
         <div key={id} className="items">
           <span>
-            <p>{name}</p>
-            <p>{details}</p>
-            <p>{size}</p>
-            <p>{maker}</p>
-            <p>{model}</p>
-            <p>{link}</p>
+            <p>ID: {id}</p>
+            <p>Name: {name}</p>
+            <p>Details: {details}</p>
+            <p>Size: {size}</p>
+            <p>Maker: {maker}</p>
+            <p>Model: {model}</p>
+            <p>Link: {link}</p>
           </span>
           <button
             onClick={() => {
@@ -133,39 +127,13 @@ export default function Items() {
 
   return (
     <WishlistUI
-      name={name}
-      details={details}
-      size={size}
-      maker={maker}
-      model={model}
-      link={link}
-      data={data}
       handleAddItem={handleAddItem}
-      modal={modal}
       toggleModal={toggleModal}
-      nameHandler={(e) => {
-        setName(e.target.value);
-      }}
-      detailsHandler={(e) => {
-        setDetails(e.target.value);
-      }}
-      sizeHandler={(e) => {
-        setSize(e.target.value);
-      }}
-      makerHandler={(e) => {
-        setMaker(e.target.value);
-      }}
-      modelHandler={(e) => {
-        setModel(e.target.value);
-      }}
-      linkHandler={(e) => {
-        setLink(e.target.value);
-      }}
+      modal={modal}
       mapData={mapData}
       handleChangeItem={handleChangeItem}
-      modalPut={modalPut}
       toggleModalPut={toggleModalPut}
-      id={modalId}
+      modalPut={modalPut}
     />
   );
 }

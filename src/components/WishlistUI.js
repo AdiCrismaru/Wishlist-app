@@ -1,30 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Wishlist.css";
 import "./Modal.css";
+import Wishlists from "../api/requests/wishlist/Wishlists";
+import { ItemsContext } from "../context/ItemsContext";
 
 function WishlistUI({
-  name,
-  details,
-  size,
-  maker,
-  model,
-  link,
-  data,
-  handleAddItem,
   modal,
+  modalPut,
+  handleAddItem,
   toggleModal,
-  nameHandler,
-  detailsHandler,
-  sizeHandler,
-  makerHandler,
-  modelHandler,
-  linkHandler,
   mapData,
   handleChangeItem,
-  modalPut,
   toggleModalPut,
-  id,
 }) {
+  const { setName, setDetails, setSize, setMaker, setLink, setModel, id } =
+    useContext(ItemsContext);
+
   return (
     <div className="wishlist-container">
       <>
@@ -38,7 +29,9 @@ function WishlistUI({
             <div className="modal-content">
               <input
                 name="name"
-                onChange={nameHandler}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
                 type="text"
                 placeholder="Item name"
                 autoComplete="off"
@@ -47,31 +40,41 @@ function WishlistUI({
                 <form onSubmit={handleAddItem}>
                   <input
                     name="details"
-                    onChange={detailsHandler}
+                    onChange={(e) => {
+                      setDetails(e.target.value);
+                    }}
                     type="text"
                     placeholder="Details"
                   ></input>
                   <input
                     name="size"
-                    onChange={sizeHandler}
+                    onChange={(e) => {
+                      setSize(e.target.value);
+                    }}
                     type="text"
                     placeholder="Size"
                   ></input>
                   <input
                     name="maker"
-                    onChange={makerHandler}
+                    onChange={(e) => {
+                      setMaker(e.target.value);
+                    }}
                     type="text"
                     placeholder="Maker"
                   ></input>
                   <input
                     name="model"
-                    onChange={modelHandler}
+                    onChange={(e) => {
+                      setModel(e.target.value);
+                    }}
                     type="text"
                     placeholder="Model"
                   ></input>
                   <input
                     name="link"
-                    onChange={linkHandler}
+                    onChange={(e) => {
+                      setLink(e.target.value);
+                    }}
                     type="text"
                     placeholder="Link"
                   ></input>
@@ -92,51 +95,63 @@ function WishlistUI({
         <div className="modall">
           <div onClick={toggleModalPut} className="overlay"></div>
           <div className="modal-content">
-            <input
-              name="name"
-              onChange={nameHandler}
-              type="text"
-              placeholder="Change name"
-              autoComplete="off"
-            ></input>
-            <div className="user-input">
-              <form
-                onSubmit={() => {
-                  handleChangeItem(id);
+            <form
+              onSubmit={() => {
+                handleChangeItem(id);
+              }}
+            >
+              <input
+                name="name"
+                onChange={(e) => {
+                  setName(e.target.value);
                 }}
-              >
+                type="text"
+                placeholder="Change name"
+                autoComplete="off"
+              ></input>
+              <div className="user-input">
                 <input
                   name="details"
-                  onChange={detailsHandler}
+                  onChange={(e) => {
+                    setDetails(e.target.value);
+                  }}
                   type="text"
                   placeholder="Details"
                 ></input>
                 <input
                   name="size"
-                  onChange={sizeHandler}
+                  onChange={(e) => {
+                    setSize(e.target.value);
+                  }}
                   type="text"
                   placeholder="Size"
                 ></input>
                 <input
                   name="maker"
-                  onChange={makerHandler}
+                  onChange={(e) => {
+                    setMaker(e.target.value);
+                  }}
                   type="text"
                   placeholder="Maker"
                 ></input>
                 <input
                   name="model"
-                  onChange={modelHandler}
+                  onChange={(e) => {
+                    setModel(e.target.value);
+                  }}
                   type="text"
                   placeholder="Model"
                 ></input>
                 <input
                   name="link"
-                  onChange={linkHandler}
+                  onChange={(e) => {
+                    setLink(e.target.value);
+                  }}
                   type="text"
                   placeholder="Link"
                 ></input>
-              </form>
-            </div>
+              </div>
+            </form>
             <div className="btns-div">
               <button onClick={toggleModalPut}>Close</button>
               <button
@@ -150,6 +165,7 @@ function WishlistUI({
           </div>
         </div>
       )}
+      <Wishlists />
     </div>
   );
 }
