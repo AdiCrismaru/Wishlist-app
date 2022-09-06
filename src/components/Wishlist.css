@@ -15,3 +15,13 @@
   margin-left: 20px;
   margin-right: 10px;
 }
+.items {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 200px;
+  margin: 10px;
+  border: 1px solid;
+  border-radius: 20px;
+}

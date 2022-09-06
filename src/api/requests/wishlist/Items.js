@@ -12,67 +12,30 @@ export default function Items() {
   const [model, setModel] = useState("");
   const [link, setLink] = useState("");
 
-  const [data, setData] = useState({
-    name,
-    details,
-    size,
-    maker,
-    model,
-    link,
-  });
+  const [modalId, setModalId] = useState("");
+
+  const [data, setData] = useState([]);
+
   const [modal, setModal] = useState(false);
+  const [modalPut, setModalPut] = useState(false);
+
+  const getData = async () => {
+    const response = await axios.get("/items", {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    setData(response.data.items);
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await axios.get("/items", {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
-      setData(response.data.items);
-      console.log(data);
-    };
     getData().catch((err) => {
       console.log(err);
     });
   }, []);
 
-  const handleDeleteItem = (id) => {
-    axios
-      .delete(`/item / ${id}`, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  const dlt = () => {
-    handleDeleteItem(90);
-  };
-
-  const mapData = Array.from(data).map(({ id, name }) => {
-    return (
-      <div>
-        <p key={id}>{name}</p>
-        <button onClick={handleDeleteItem}>del</button>
-      </div>
-    );
-  });
-
-  // const handle = (e) => {
-  //   const newdata = { ...data };
-  //   newdata[e.target.id] = e.target.value;
-  //   setData(newdata);
-  // };
-
   const handleAddItem = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(
         "/items",
@@ -88,16 +51,85 @@ export default function Items() {
           headers: { authorization: `Bearer ${token}` },
         }
       );
-      console.log(response);
+      getData();
     } catch (err) {
       console.log(err);
     }
     toggleModal();
   };
+
+  const handleChangeItem = (id) => {
+    axios
+      .put(
+        `/items/${id}`,
+        { name, details, size, maker, model, link },
+        { headers: { authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          getData();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    toggleModalPut();
+  };
+
+  const handleDeleteItem = (id) => {
+    axios
+      .delete(`/items/${id}`, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const toggleModal = () => {
     setModal(!modal);
-    console.log(data);
   };
+  const toggleModalPut = (id) => {
+    setModalPut(!modalPut);
+    setModalId(id);
+  };
+
+  const mapData = data.map(
+    ({ id, name, details, size, maker, model, link }) => {
+      return (
+        <div key={id} className="items">
+          <span>
+            <p>{name}</p>
+            <p>{details}</p>
+            <p>{size}</p>
+            <p>{maker}</p>
+            <p>{model}</p>
+            <p>{link}</p>
+          </span>
+          <button
+            onClick={() => {
+              handleDeleteItem(id);
+            }}
+          >
+            D
+          </button>
+          <button
+            onClick={() => {
+              toggleModalPut(id);
+            }}
+          >
+            C
+          </button>
+        </div>
+      );
+    }
+  );
 
   return (
     <WishlistUI
@@ -108,15 +140,32 @@ export default function Items() {
       model={model}
       link={link}
       data={data}
-      // handle={handle}
       handleAddItem={handleAddItem}
       modal={modal}
       toggleModal={toggleModal}
       nameHandler={(e) => {
         setName(e.target.value);
       }}
+      detailsHandler={(e) => {
+        setDetails(e.target.value);
+      }}
+      sizeHandler={(e) => {
+        setSize(e.target.value);
+      }}
+      makerHandler={(e) => {
+        setMaker(e.target.value);
+      }}
+      modelHandler={(e) => {
+        setModel(e.target.value);
+      }}
+      linkHandler={(e) => {
+        setLink(e.target.value);
+      }}
       mapData={mapData}
-      dlt={dlt}
+      handleChangeItem={handleChangeItem}
+      modalPut={modalPut}
+      toggleModalPut={toggleModalPut}
+      id={modalId}
     />
   );
 }

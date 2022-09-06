@@ -57,7 +57,7 @@ function ProfileGET() {
   };
   const logoutHandle = () => {
     navigate("/");
-    localStorage.removeItem("token");
+    localStorage.clear();
   };
 
   return (

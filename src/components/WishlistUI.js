@@ -14,8 +14,16 @@ function WishlistUI({
   modal,
   toggleModal,
   nameHandler,
+  detailsHandler,
+  sizeHandler,
+  makerHandler,
+  modelHandler,
+  linkHandler,
   mapData,
-  dlt,
+  handleChangeItem,
+  modalPut,
+  toggleModalPut,
+  id,
 }) {
   return (
     <div className="wishlist-container">
@@ -37,24 +45,36 @@ function WishlistUI({
               ></input>
               <div className="user-input">
                 <form onSubmit={handleAddItem}>
-                  {/* <input
-                  name="item"
-                  value={item}
-                  onChange={(e) => {
-                    setItem(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="Item"
-                ></input> */}
-                  {/* <input
+                  <input
+                    name="details"
+                    onChange={detailsHandler}
+                    type="text"
+                    placeholder="Details"
+                  ></input>
+                  <input
+                    name="size"
+                    onChange={sizeHandler}
+                    type="text"
+                    placeholder="Size"
+                  ></input>
+                  <input
+                    name="maker"
+                    onChange={makerHandler}
+                    type="text"
+                    placeholder="Maker"
+                  ></input>
+                  <input
+                    name="model"
+                    onChange={modelHandler}
+                    type="text"
+                    placeholder="Model"
+                  ></input>
+                  <input
                     name="link"
-                    value={link}
-                    onChange={(e) => {
-                      setLink(e.target.value);
-                    }}
+                    onChange={linkHandler}
                     type="text"
                     placeholder="Link"
-                  ></input> */}
+                  ></input>
                 </form>
               </div>
               <div className="btns-div">
@@ -65,16 +85,71 @@ function WishlistUI({
           </div>
         )}
       </>
+
       {mapData}
-      <div className="">
-        <button onClick={dlt}>dlt</button>
-        <p>{name}</p>
-        <p>{details}</p>
-        <p>{size}</p>
-        <p>{maker}</p>
-        <p>{model}</p>
-        <p>{link}</p>
-      </div>
+
+      {modalPut && (
+        <div className="modall">
+          <div onClick={toggleModalPut} className="overlay"></div>
+          <div className="modal-content">
+            <input
+              name="name"
+              onChange={nameHandler}
+              type="text"
+              placeholder="Change name"
+              autoComplete="off"
+            ></input>
+            <div className="user-input">
+              <form
+                onSubmit={() => {
+                  handleChangeItem(id);
+                }}
+              >
+                <input
+                  name="details"
+                  onChange={detailsHandler}
+                  type="text"
+                  placeholder="Details"
+                ></input>
+                <input
+                  name="size"
+                  onChange={sizeHandler}
+                  type="text"
+                  placeholder="Size"
+                ></input>
+                <input
+                  name="maker"
+                  onChange={makerHandler}
+                  type="text"
+                  placeholder="Maker"
+                ></input>
+                <input
+                  name="model"
+                  onChange={modelHandler}
+                  type="text"
+                  placeholder="Model"
+                ></input>
+                <input
+                  name="link"
+                  onChange={linkHandler}
+                  type="text"
+                  placeholder="Link"
+                ></input>
+              </form>
+            </div>
+            <div className="btns-div">
+              <button onClick={toggleModalPut}>Close</button>
+              <button
+                onClick={() => {
+                  handleChangeItem(id);
+                }}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
