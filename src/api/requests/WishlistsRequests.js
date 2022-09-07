@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "../axios";
 import { WishlistsContext } from "../../context/WishlistsContext";
+import WishlistUI from "../../pages/wishlistsPage/WishlistUI";
+import List from "../../components/List";
+import axios from "../axios";
 
 export default function WishlistsRequests() {
   const token = localStorage.getItem("token");
@@ -9,17 +11,15 @@ export default function WishlistsRequests() {
     data,
     setData,
     name,
-    setName,
     details,
-    setDetails,
     itemIds,
-    setItemIds,
     id,
     setId,
+    modalAddItem,
+    setModalAddItem,
+    modalUpdateItem,
+    setModalUpdateItem,
   } = useContext(WishlistsContext);
-
-  const [modalChangeItem, setModalChangeItem] = useState(false);
-  const [modalAddItem, setModalAddItem] = useState(false);
 
   const getData = async () => {
     const response = await axios.get("/wishlists", {
@@ -75,10 +75,16 @@ export default function WishlistsRequests() {
       .catch((err) => {
         console.log(err);
       });
+    toggleModalUpdateItem();
   };
 
-  const toggleModalChangeItem = (id) => {
-    setModalChangeItem(!modalChangeItem);
+  const onChangeHandler = (e) => {
+    console.log(e.target.value);
+  };
+
+  const toggleModalUpdateItem = (id) => {
+    setModalUpdateItem(!modalUpdateItem);
+    console.log(modalUpdateItem);
     setId(id);
   };
   const toggleModalAddItem = () => {
@@ -98,127 +104,24 @@ export default function WishlistsRequests() {
       });
   };
 
-  const wishlistsMap = data.map(({ id, name, details, items }) => {
+  const wishlistsMap = data.map((object) => {
     return (
-      <div key={id} className="items">
-        <span>
-          <p>{name}</p>
-          <p>{details}</p>
-          <p>{items}</p>
-        </span>
-        <button
-          onClick={() => {
-            DELETEhandler(id);
-          }}
-        >
-          D
-        </button>
-        <button
-          onClick={() => {
-            toggleModalChangeItem(id);
-          }}
-        >
-          C
-        </button>
-      </div>
+      <List
+        object={object}
+        DELETEhandler={DELETEhandler}
+        toggleModalUpdateItem={toggleModalUpdateItem}
+      />
     );
   });
   return (
-    <div>
-      <button onClick={toggleModalAddItem} className="btn-modal">
-        Add new
-      </button>
-      {modalAddItem && (
-        <div className="modall">
-          <div onClick={toggleModalAddItem} className="overlay"></div>
-          <div className="modal-content">
-            <input
-              name="name"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              type="text"
-              placeholder="Item name"
-              autoComplete="off"
-            ></input>
-            <div className="user-input">
-              <form onSubmit={POSThandler}>
-                <input
-                  name="details"
-                  onChange={(e) => {
-                    setDetails(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="Details"
-                ></input>
-                <input
-                  name="IDs"
-                  onChange={(e) => {
-                    setItemIds(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="IDs"
-                ></input>
-              </form>
-            </div>
-            <div className="btns-div">
-              <button onClick={toggleModalAddItem}>Close</button>
-              <button onClick={POSThandler}>Save</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {wishlistsMap}
-      {modalChangeItem && (
-        <div className="modall">
-          <div onClick={toggleModalChangeItem} className="overlay"></div>
-          <div className="modal-content">
-            <form
-              onSubmit={() => {
-                PUThandler(id);
-              }}
-            >
-              <input
-                name="name"
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-                type="text"
-                placeholder="Change name"
-                autoComplete="off"
-              ></input>
-              <div className="user-input">
-                <input
-                  name="details"
-                  onChange={(e) => {
-                    setDetails(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="Details"
-                ></input>
-                <input
-                  name="IDs"
-                  onChange={(e) => {
-                    setItemIds(e.target.value);
-                  }}
-                  type="text"
-                  placeholder="IDs"
-                ></input>
-              </div>
-            </form>
-            <div className="btns-div">
-              <button onClick={toggleModalChangeItem}>Close</button>
-              <button
-                onClick={() => {
-                  PUThandler(id);
-                }}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    <WishlistUI
+      toggleModalAddItem={toggleModalAddItem}
+      POSThandler={POSThandler}
+      wishlistsMap={wishlistsMap}
+      toggleModalUpdateItem={toggleModalUpdateItem}
+      PUThandler={PUThandler}
+      modalAddItem={modalAddItem}
+      modalUpdateItem={modalUpdateItem}
+    />
   );
 }

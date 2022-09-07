@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../context/LoginContext";
 import LoginUI from "../../pages/loginPage/LoginUI";
 import axios from "../axios";
 
 export default function LoginRequests() {
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-
-  const [errMsg, setErrMsg] = useState();
+  const { email, password, setErrMsg } = useContext(LoginContext);
 
   let navigate = useNavigate();
 
+  useEffect(() => {
+    setErrMsg("");
+  }, [email, password]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post("/login", {
-        email: email,
-        password: pwd,
+        email,
+        password,
       });
 
       if (response.status === 200) {
@@ -38,15 +39,5 @@ export default function LoginRequests() {
       }
     }
   };
-  return (
-    <LoginUI
-      handleSubmit={handleSubmit}
-      setEmail={(e) => setEmail(e.target.value)}
-      email={email}
-      setPwd={(e) => setPwd(e.target.value)}
-      pwd={pwd}
-      errMsg={errMsg}
-      className={errMsg ? "errmsg" : "offscreen"}
-    />
-  );
+  return <LoginUI handleSubmit={handleSubmit} />;
 }

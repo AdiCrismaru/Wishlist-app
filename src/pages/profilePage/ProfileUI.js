@@ -1,13 +1,13 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Nav from "../../components/Nav";
+import Moment from "moment";
+import "./Profile.css";
 import {
   faUpRightFromSquare,
   faUser,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Nav from "../../components/Nav";
-import "./Profile.css";
-import Moment from "moment";
 
 function ProfileUI({
   name,

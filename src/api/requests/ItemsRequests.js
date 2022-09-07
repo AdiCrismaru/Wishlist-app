@@ -1,16 +1,27 @@
 import React, { useState, useEffect, useContext } from "react";
 import ItemsUI from "../../pages/itemsPage/ItemsUI";
-import axios from "../axios";
 import { ItemsContext } from "../../context/ItemsContext";
+import Item from "../../components/Item";
+import axios from "../axios";
 
 export default function ItemsRequests() {
   const token = localStorage.getItem("token");
 
-  const { name, details, size, maker, model, link, setId, data, setData } =
-    useContext(ItemsContext);
-
-  const [modal, setModal] = useState(false);
-  const [modalPut, setModalPut] = useState(false);
+  const {
+    name,
+    details,
+    size,
+    maker,
+    model,
+    link,
+    setId,
+    data,
+    setData,
+    modal,
+    setModal,
+    modalPut,
+    setModalPut,
+  } = useContext(ItemsContext);
 
   const getData = async () => {
     const response = await axios.get("/items", {
@@ -30,7 +41,7 @@ export default function ItemsRequests() {
   const handleAddItem = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         "/items",
         {
           name,
@@ -51,7 +62,7 @@ export default function ItemsRequests() {
     toggleModal();
   };
 
-  const handleChangeItem = (id) => {
+  const handleUpdateItem = (id) => {
     axios
       .put(
         `/items/${id}`,
@@ -93,47 +104,23 @@ export default function ItemsRequests() {
     setId(id);
   };
 
-  const mapData = data.map(
-    ({ id, name, details, size, maker, model, link }) => {
-      return (
-        <div key={id} className="items">
-          <span>
-            <p>ID: {id}</p>
-            <p>Name: {name}</p>
-            <p>Details: {details}</p>
-            <p>Size: {size}</p>
-            <p>Maker: {maker}</p>
-            <p>Model: {model}</p>
-            <p>Link: {link}</p>
-          </span>
-          <button
-            onClick={() => {
-              handleDeleteItem(id);
-            }}
-          >
-            D
-          </button>
-          <button
-            onClick={() => {
-              toggleModalPut(id);
-            }}
-          >
-            C
-          </button>
-        </div>
-      );
-    }
-  );
+  const mapData = data.map((object) => {
+    return (
+      <Item
+        object={object}
+        handleDeleteItem={handleDeleteItem}
+        toggleModalPut={toggleModalPut}
+      />
+    );
+  });
 
   return (
     <ItemsUI
       handleAddItem={handleAddItem}
       toggleModal={toggleModal}
-      modal={modal}
       mapData={mapData}
-      handleChangeItem={handleChangeItem}
+      handleUpdateItem={handleUpdateItem}
       toggleModalPut={toggleModalPut}
-      modalPut={modalPut}
     />
   );
 }

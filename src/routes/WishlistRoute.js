@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Nav from "../components/Nav";
-import WishlistUI from "../pages/wishlistsPage/WishlistUI";
 import { WishlistsContext } from "../context/WishlistsContext";
+import WishlistsRequests from "../api/requests/WishlistsRequests";
 
 export default function WishlistRoute() {
   const [data, setData] = useState([]);
@@ -9,8 +9,11 @@ export default function WishlistRoute() {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
 
-  const [itemIds, setItemIds] = useState([0]);
+  const [itemIds, setItemIds] = useState([]);
   const [id, setId] = useState([]);
+
+  const [modalUpdateItem, setModalUpdateItem] = useState(false);
+  const [modalAddItem, setModalAddItem] = useState(false);
   return (
     <div>
       <Nav />
@@ -26,9 +29,13 @@ export default function WishlistRoute() {
           setItemIds,
           id,
           setId,
+          modalAddItem,
+          setModalAddItem,
+          modalUpdateItem,
+          setModalUpdateItem,
         }}
       >
-        <WishlistUI />
+        <WishlistsRequests />
       </WishlistsContext.Provider>
     </div>
   );

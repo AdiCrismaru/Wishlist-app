@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from "react";
-import axios from "./axios";
+import React, { useEffect, useContext, useRef } from "react";
+import RegisterUI from "../../pages/registerPage/RegisterUI";
+import { RegisterContext } from "../../context/RegisterContext";
+import "../../pages/registerPage/Login&Register.css";
 import { useNavigate } from "react-router-dom";
-import RegisterUI from "../components/RegisterUI";
-import "../components/Login&Register.css";
+import axios from "../axios";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-function RegisterRequests() {
+export default function RegisterRequests() {
+  const {
+    email,
+    setValidEmail,
+    password,
+    setValidPassword,
+    setErrMsg,
+    data,
+    setData,
+  } = useContext(RegisterContext);
+
   const navigate = useNavigate();
-
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-
-  const [dob, setDob] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-
-  const [errMsg, setErrMsg] = useState("");
+  const userRef = useRef();
 
   useEffect(() => {
-    const result = PWD_REGEX.test(pwd);
-    setValidPwd(result);
-  }, [pwd]);
+    userRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    const result = PWD_REGEX.test(password);
+    setValidPassword(result);
+  }, [password]);
 
   useEffect(() => {
     const result = EMAIL_REGEX.test(email);
@@ -34,15 +38,7 @@ function RegisterRequests() {
 
   useEffect(() => {
     setErrMsg("");
-  }, [email, pwd]);
-
-  const [data, setData] = useState({
-    email,
-    password: pwd,
-    dob,
-    name,
-    phone,
-  });
+  }, [email, password]);
 
   const handle = (e) => {
     const newdata = { ...data };
@@ -52,21 +48,11 @@ function RegisterRequests() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // axios
-    //   .post(REGISTER_URL, {
-    //     email: data.email,
-    //     password: data.password,
-    //     dob: data.dob,
-    //     name: data.name,
-    //     phone: data.phone,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
+
     const v1 = EMAIL_REGEX.test(email);
-    const v2 = PWD_REGEX.test(pwd);
+    const v2 = PWD_REGEX.test(password);
     if (!v1 || !v2) {
-      setErrMsg("Please fill all required fields.");
+      setErrMsg("Please fill all the required fields.");
       return;
     }
 
@@ -94,36 +80,6 @@ function RegisterRequests() {
     }
   };
   return (
-    <RegisterUI
-      handleSubmit={handleSubmit}
-      handle={handle}
-      errMsg={errMsg}
-      className={errMsg ? "errmsg" : "offscreen"}
-      setEmail={(e) => {
-        setEmail(e.target.value);
-        handle(e);
-      }}
-      dataEmail={data.email}
-      setPwd={(e) => {
-        setPwd(e.target.value);
-        handle(e);
-      }}
-      dataPwd={data.password}
-      setDob={(e) => {
-        setDob(e.target.value);
-        handle(e);
-      }}
-      dataDob={data.dob}
-      setName={(e) => {
-        setName(e.target.value);
-        handle(e);
-      }}
-      dataName={data.name}
-      setPhone={(e) => {
-        setPhone(e.target.value);
-        handle(e);
-      }}
-      dataPhone={data.phone}
-    />
+    <RegisterUI handleSubmit={handleSubmit} handle={handle} userRef={userRef} />
   );
 }

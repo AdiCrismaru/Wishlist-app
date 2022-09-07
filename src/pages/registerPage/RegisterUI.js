@@ -1,66 +1,43 @@
-import { React, useRef, useState, useEffect } from "react";
+import { React, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../../components/Button";
-import "./Login&Register.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { RegisterContext } from "../../context/RegisterContext";
+import "./Login&Register.css";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+export default function RegisterUI({ handle, handleSubmit, userRef }) {
+  const {
+    email,
+    setEmail,
+    validEmail,
+    emailFocus,
+    setEmailFocus,
+    password,
+    setPassword,
+    validPassword,
+    passwordFocus,
+    setPasswordFocus,
+    dob,
+    setDob,
+    name,
+    setName,
+    phone,
+    setPhone,
+    errMsg,
+  } = useContext(RegisterContext);
 
-export default function Register(props) {
-  const navigate = useNavigate();
-
-  const userRef = useRef();
   const errRef = useRef();
-
-  const [email, setEmail] = useState("");
-  const [validEmail, setValidEmail] = useState(false);
-  const [emailFocus, setEmailFocus] = useState(false);
-
-  const [pwd, setPwd] = useState("");
-  const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
-
-  const [dob, setDob] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-
-  const [errMsg, setErrMsg] = useState();
-
-  useEffect(() => {
-    userRef.current.focus();
-  }, []);
-  useEffect(() => {
-    const result = PWD_REGEX.test(pwd);
-    setValidPwd(result);
-  }, [pwd]);
-
-  useEffect(() => {
-    const result = EMAIL_REGEX.test(email);
-    setValidEmail(result);
-  }, [email]);
-
-  useEffect(() => {
-    setErrMsg("");
-  }, [email, pwd]);
-
-  // const [data, setData] = useState({
-  //   email,
-  //   password: pwd,
-  //   dob,
-  //   name,
-  //   phone,
-  // });
+  const navigate = useNavigate();
 
   return (
     <section className="register-container">
-      <p ref={errRef} className={props.className}>
-        {props.errMsg}
+      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
+        {errMsg}
       </p>
       <h1>Create an account:</h1>
       <form>
@@ -78,8 +55,11 @@ export default function Register(props) {
           id="email"
           ref={userRef}
           autoComplete="off"
-          onChange={props.setEmail}
-          value={props.dataEmail}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            handle(e);
+          }}
+          value={email}
           required
           onFocus={() => {
             setEmailFocus(true);
@@ -99,29 +79,34 @@ export default function Register(props) {
         </p>
         <label htmlFor="password">
           Password:
-          <span className={validPwd ? "valid" : "hide"}>
+          <span className={validPassword ? "valid" : "hide"}>
             <FontAwesomeIcon icon={faCheck} />
           </span>
-          <span className={validPwd || !pwd ? "hide" : "invalid"}>
+          <span className={validPassword || !password ? "hide" : "invalid"}>
             <FontAwesomeIcon icon={faTimes} />
           </span>
         </label>
         <input
           type="password"
           id="password"
-          onChange={props.setPwd}
-          value={props.dataPwd}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            handle(e);
+          }}
+          value={password}
           required
           onFocus={() => {
-            setPwdFocus(true);
+            setPasswordFocus(true);
           }}
           onBlur={() => {
-            setPwdFocus(false);
+            setPasswordFocus(false);
           }}
         ></input>
         <p
           id="pwdnote"
-          className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
+          className={
+            passwordFocus && !validPassword ? "instructions" : "offscreen"
+          }
         >
           <FontAwesomeIcon icon={faInfoCircle} />
           8 to 24 characters. <br />
@@ -134,8 +119,11 @@ export default function Register(props) {
           id="dob"
           autoComplete="off"
           required
-          onChange={props.setDob}
-          value={props.dataDob}
+          onChange={(e) => {
+            setDob(e.target.value);
+            handle(e);
+          }}
+          value={dob}
         ></input>
 
         <label htmlFor="name">Full Name:</label>
@@ -144,8 +132,11 @@ export default function Register(props) {
           id="name"
           autoComplete="off"
           required
-          onChange={props.setName}
-          value={props.dataName}
+          onChange={(e) => {
+            setName(e.target.value);
+            handle(e);
+          }}
+          value={name}
         ></input>
 
         <label htmlFor="phone">Phone number:</label>
@@ -154,8 +145,11 @@ export default function Register(props) {
           id="phone"
           autoComplete="off"
           required
-          onChange={props.setPhone}
-          value={props.dataPhone}
+          onChange={(e) => {
+            setPhone(e.target.value);
+            handle(e);
+          }}
+          value={phone}
         ></input>
       </form>
       <div className="btns">
@@ -166,7 +160,7 @@ export default function Register(props) {
           }}
         />
 
-        <OutlinedButton text="Register" click={props.handleSubmit} />
+        <OutlinedButton text="Register" click={handleSubmit} />
       </div>
     </section>
   );

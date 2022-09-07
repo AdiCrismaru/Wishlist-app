@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ItemsRequests from "../api/requests/ItemsRequests";
 import Nav from "../components/Nav";
+import ItemsRequests from "../api/requests/ItemsRequests";
 import { ItemsContext } from "../context/ItemsContext";
 
 export default function ItemsRoute() {
@@ -12,6 +12,9 @@ export default function ItemsRoute() {
   const [link, setLink] = useState("");
 
   const [id, setId] = useState("");
+
+  const [modal, setModal] = useState(false);
+  const [modalPut, setModalPut] = useState(false);
 
   const [data, setData] = useState([]);
   return (
@@ -36,6 +39,10 @@ export default function ItemsRoute() {
             setId,
             data,
             setData,
+            modal,
+            setModal,
+            modalPut,
+            setModalPut,
           }}
         >
           <ItemsRequests />

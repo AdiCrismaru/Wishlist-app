@@ -1,32 +1,27 @@
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../../components/Button";
 import "./Login&Register.css";
+import { LoginContext } from "../../context/LoginContext";
 
-export default function LoginUI(props) {
-  const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
-
-  const [errMsg, setErrMsg] = useState();
+export default function LoginUI({ handleSubmit }) {
+  const { email, setEmail, password, setPassword, errMsg } =
+    useContext(LoginContext);
 
   const userRef = useRef();
   const errRef = useRef();
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
-  useEffect(() => {
-    setErrMsg("");
-  }, [email, pwd]);
-
   return (
     <section>
-      <p ref={errRef} className={props.className}>
-        {props.errMsg}
+      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
+        {errMsg}
       </p>
       <h1>Sign in to continue.</h1>
       <form>
@@ -36,8 +31,10 @@ export default function LoginUI(props) {
           id="email"
           ref={userRef}
           autoComplete="off"
-          onChange={props.setEmail}
-          value={props.email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          value={email}
           required
         ></input>
 
@@ -45,11 +42,11 @@ export default function LoginUI(props) {
         <input
           type="password"
           id="password"
-          onChange={props.setPwd}
-          value={props.pwd}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
           required
         ></input>
-        <OutlinedButton click={props.handleSubmit} text="Sign In" />
+        <OutlinedButton click={handleSubmit} text="Sign In" />
       </form>
       <p>
         Don't have an account?
