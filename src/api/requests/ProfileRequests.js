@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProfileUI from "../../../components/ProfileUI";
-import axios from "../../axios";
+import ProfileUI from "../../pages/profilePage/ProfileUI";
+import axios from "../axios";
 
-function ProfileGET() {
+export default function ProfileRequests() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -90,5 +90,3 @@ function ProfileGET() {
     // />
   );
 }
-
-export default ProfileGET;

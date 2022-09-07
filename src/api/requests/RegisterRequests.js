@@ -7,9 +7,7 @@ import "../components/Login&Register.css";
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-const REGISTER_URL = "/register";
-
-function RegisterPOST() {
+function RegisterRequests() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -73,7 +71,7 @@ function RegisterPOST() {
     }
 
     try {
-      const response = await axios.post(REGISTER_URL, {
+      const response = await axios.post("/register", {
         email: data.email,
         password: data.password,
         dob: data.dob,
@@ -129,5 +127,3 @@ function RegisterPOST() {
     />
   );
 }
-
-export default RegisterPOST;

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import OutlinedButton from "./Button";
+import OutlinedButton from "../../components/Button";
 import "./Login&Register.css";
 
 export default function LoginUI(props) {

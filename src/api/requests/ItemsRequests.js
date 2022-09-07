@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import WishlistUI from "../../../components/WishlistUI";
-import axios from "../../axios";
-import { ItemsContext } from "../../../context/ItemsContext";
+import ItemsUI from "../../pages/itemsPage/ItemsUI";
+import axios from "../axios";
+import { ItemsContext } from "../../context/ItemsContext";
 
-export default function Items() {
+export default function ItemsRequests() {
   const token = localStorage.getItem("token");
 
   const { name, details, size, maker, model, link, setId, data, setData } =
@@ -126,7 +126,7 @@ export default function Items() {
   );
 
   return (
-    <WishlistUI
+    <ItemsUI
       handleAddItem={handleAddItem}
       toggleModal={toggleModal}
       modal={modal}

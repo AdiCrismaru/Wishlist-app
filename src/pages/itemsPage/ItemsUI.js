@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
-import "./Wishlist.css";
-import "./Modal.css";
-import Wishlists from "../api/requests/wishlist/Wishlists";
-import { ItemsContext } from "../context/ItemsContext";
+import "./Items.css";
+import "../../components/Modal.css";
+import { ItemsContext } from "../../context/ItemsContext";
 
-function WishlistUI({
+function ItemsUI({
   modal,
   modalPut,
   handleAddItem,
@@ -165,9 +164,8 @@ function WishlistUI({
           </div>
         </div>
       )}
-      <Wishlists />
     </div>
   );
 }
 
-export default WishlistUI;
+export default ItemsUI;

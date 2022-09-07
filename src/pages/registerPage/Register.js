@@ -1,18 +1,21 @@
 import { React, useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import OutlinedButton from "./Button";
+import OutlinedButton from "../../components/Button";
 import "./Login&Register.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faTimes,
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "../../api/axios";
 
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 
-export default function Register(props) {
+const REGISTER_URL = "/register";
+
+export default function Register() {
   const navigate = useNavigate();
 
   const userRef = useRef();
@@ -35,6 +38,7 @@ export default function Register(props) {
   useEffect(() => {
     userRef.current.focus();
   }, []);
+
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
     setValidPwd(result);
@@ -49,18 +53,58 @@ export default function Register(props) {
     setErrMsg("");
   }, [email, pwd]);
 
-  // const [data, setData] = useState({
-  //   email,
-  //   password: pwd,
-  //   dob,
-  //   name,
-  //   phone,
-  // });
+  const [data, setData] = useState({
+    email,
+    password: pwd,
+    dob,
+    name,
+    phone,
+  });
+
+  const handle = (e) => {
+    const newdata = { ...data };
+    newdata[e.target.id] = e.target.value;
+    setData(newdata);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const v1 = EMAIL_REGEX.test(email);
+    const v2 = PWD_REGEX.test(pwd);
+    if (!v1 || !v2) {
+      setErrMsg("Please fill all the required fields.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(REGISTER_URL, {
+        email: data.email,
+        password: data.password,
+        dob: data.dob,
+        name: data.name,
+        phone: data.phone,
+      });
+      setErrMsg(response.data.errors);
+      console.log(response.data);
+      if (response.data.id) {
+        navigate("/");
+      }
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No server response");
+      } else if (err.response?.status === 409) {
+        setErrMsg("Email already in use.");
+      } else {
+        setErrMsg("Registration failed.");
+      }
+    }
+  };
 
   return (
     <section className="register-container">
-      <p ref={errRef} className={props.className}>
-        {props.errMsg}
+      <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}>
+        {errMsg}
       </p>
       <h1>Create an account:</h1>
       <form>
@@ -78,8 +122,11 @@ export default function Register(props) {
           id="email"
           ref={userRef}
           autoComplete="off"
-          onChange={props.setEmail}
-          value={props.dataEmail}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            handle(e);
+          }}
+          value={data.email}
           required
           onFocus={() => {
             setEmailFocus(true);
@@ -109,8 +156,11 @@ export default function Register(props) {
         <input
           type="password"
           id="password"
-          onChange={props.setPwd}
-          value={props.dataPwd}
+          onChange={(e) => {
+            setPwd(e.target.value);
+            handle(e);
+          }}
+          value={data.password}
           required
           onFocus={() => {
             setPwdFocus(true);
@@ -134,8 +184,11 @@ export default function Register(props) {
           id="dob"
           autoComplete="off"
           required
-          onChange={props.setDob}
-          value={props.dataDob}
+          onChange={(e) => {
+            setDob(e.target.value);
+            handle(e);
+          }}
+          value={data.dob}
         ></input>
 
         <label htmlFor="name">Full Name:</label>
@@ -144,8 +197,11 @@ export default function Register(props) {
           id="name"
           autoComplete="off"
           required
-          onChange={props.setName}
-          value={props.dataName}
+          onChange={(e) => {
+            setName(e.target.value);
+            handle(e);
+          }}
+          value={data.name}
         ></input>
 
         <label htmlFor="phone">Phone number:</label>
@@ -154,8 +210,11 @@ export default function Register(props) {
           id="phone"
           autoComplete="off"
           required
-          onChange={props.setPhone}
-          value={props.dataPhone}
+          onChange={(e) => {
+            setPhone(e.target.value);
+            handle(e);
+          }}
+          value={data.phone}
         ></input>
       </form>
       <div className="btns">
@@ -166,7 +225,7 @@ export default function Register(props) {
           }}
         />
 
-        <OutlinedButton text="Register" click={props.handleSubmit} />
+        <OutlinedButton text="Register" click={handleSubmit} />
       </div>
     </section>
   );

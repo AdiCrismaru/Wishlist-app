@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Items from "../api/requests/wishlist/Items";
-import Wishlists from "../api/requests/wishlist/Wishlists";
+import ItemsRequests from "../api/requests/ItemsRequests";
 import Nav from "../components/Nav";
 import { ItemsContext } from "../context/ItemsContext";
 
-export default function WishlistPage() {
+export default function ItemsRoute() {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [size, setSize] = useState("");
@@ -39,7 +38,7 @@ export default function WishlistPage() {
             setData,
           }}
         >
-          <Items />
+          <ItemsRequests />
         </ItemsContext.Provider>
       </div>
     </div>

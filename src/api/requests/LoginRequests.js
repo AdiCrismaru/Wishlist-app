@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginUI from "../../../components/LoginUI";
-import axios from "../../axios";
+import LoginUI from "../../pages/loginPage/LoginUI";
+import axios from "../axios";
 
-const LOGIN_URL = "/login";
-
-const LoginPOST = () => {
+export default function LoginRequests() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
 
@@ -17,7 +15,7 @@ const LoginPOST = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(LOGIN_URL, {
+      const response = await axios.post("/login", {
         email: email,
         password: pwd,
       });
@@ -51,6 +49,4 @@ const LoginPOST = () => {
       className={errMsg ? "errmsg" : "offscreen"}
     />
   );
-};
-
-export default LoginPOST;
+}

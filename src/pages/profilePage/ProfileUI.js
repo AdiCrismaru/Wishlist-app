@@ -5,7 +5,7 @@ import {
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Nav from "./Nav";
+import Nav from "../../components/Nav";
 import "./Profile.css";
 import Moment from "moment";
 
