@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { WishlistsContext } from "../../context/WishlistsContext";
 import WishlistModal from "../../components/WishlistModal";
+import IdMapModal from "../../components/IdMapModal";
 
 function WishlistUI({
   toggleModalAddItem,
@@ -17,7 +18,7 @@ function WishlistUI({
           Add new
         </button>
         {modalAddItem && (
-          <WishlistModal toggle={toggleModalAddItem} handler={POSThandler} />
+          <IdMapModal toggle={toggleModalAddItem} handle={POSThandler} />
         )}
 
         {wishlistsMap}
@@ -25,7 +26,7 @@ function WishlistUI({
         {modalUpdateItem && (
           <WishlistModal
             toggle={toggleModalUpdateItem}
-            handler={() => {
+            handle={() => {
               PUThandler(id);
             }}
           />

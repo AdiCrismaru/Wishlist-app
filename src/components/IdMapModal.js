@@ -1,0 +1,58 @@
+import React, { useContext } from "react";
+import { WishlistsContext } from "../context/WishlistsContext";
+
+export default function IdMapModal({ toggle, handle }) {
+  const { setName, setDetails, itemIds, setItemIds, itemData } =
+    useContext(WishlistsContext);
+
+  return (
+    <div className="modall">
+      <div onClick={toggle} className="overlay"></div>
+      <div className="modal-content">
+        <form onSubmit={handle}>
+          <input
+            name="name"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            type="text"
+            placeholder="Wishlist name"
+            autoComplete="off"
+          ></input>
+          <div className="user-input">
+            <input
+              name="details"
+              onChange={(e) => {
+                setDetails(e.target.value);
+              }}
+              type="text"
+              placeholder="Details"
+            ></input>
+            <label htmlFor="dropdown">Choose item:</label>
+            <select name="name" id="dropdown" required multiple>
+              {itemData.map((object) => {
+                return (
+                  <option
+                    value={object.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setItemIds([...itemIds, parseInt(e.target.value)]);
+
+                      console.log(itemIds);
+                    }}
+                  >
+                    {object.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </form>
+        <div className="btns-div">
+          <button onClick={toggle}>Close</button>
+          <button onClick={handle}>Save</button>
+        </div>
+      </div>
+    </div>
+  );
+}

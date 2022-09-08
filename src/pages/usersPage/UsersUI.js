@@ -5,7 +5,6 @@ function UsersUI() {
   return (
     <div>
       <Nav />
-      <div>Users UI</div>
     </div>
   );
 }

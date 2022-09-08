@@ -83,23 +83,23 @@ function ProfileUI({
         </div>
         <hr />
         <div className="user-info">
-          <p className="">Name:</p>
-          <p className="">{name}</p>
+          <p>Name:</p>
+          <p>{name}</p>
         </div>
         <hr />
         <div className="user-info">
-          <p className="">Email:</p>
-          <p className="">{email}</p>
+          <p>Email:</p>
+          <p>{email}</p>
         </div>
         <hr />
         <div className="user-info">
-          <p className="">Phone:</p>
-          <span className="">{phone}</span>
+          <p>Phone:</p>
+          <span>{phone}</span>
         </div>
         <hr />
         <div className="user-info">
-          <p className="">Date of birth:</p>
-          <p className="">{formatDate}</p>
+          <p>Date of birth:</p>
+          <p>{formatDate}</p>
         </div>
       </div>
     </div>

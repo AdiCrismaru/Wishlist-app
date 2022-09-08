@@ -13,12 +13,12 @@ export default function WishlistsRequests() {
     name,
     details,
     itemIds,
-    id,
     setId,
     modalAddItem,
     setModalAddItem,
     modalUpdateItem,
     setModalUpdateItem,
+    setItemData,
   } = useContext(WishlistsContext);
 
   const getData = async () => {
@@ -28,7 +28,6 @@ export default function WishlistsRequests() {
       },
     });
     setData(response.data.wishlists);
-    console.log(data);
   };
 
   useEffect(() => {
@@ -84,11 +83,23 @@ export default function WishlistsRequests() {
 
   const toggleModalUpdateItem = (id) => {
     setModalUpdateItem(!modalUpdateItem);
-    console.log(modalUpdateItem);
     setId(id);
+  };
+
+  const getItems = async () => {
+    await axios
+      .get("/items", {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setItemData(response.data.items);
+      });
   };
   const toggleModalAddItem = () => {
     setModalAddItem(!modalAddItem);
+    getItems();
   };
 
   const DELETEhandler = (id) => {
@@ -120,8 +131,6 @@ export default function WishlistsRequests() {
       wishlistsMap={wishlistsMap}
       toggleModalUpdateItem={toggleModalUpdateItem}
       PUThandler={PUThandler}
-      modalAddItem={modalAddItem}
-      modalUpdateItem={modalUpdateItem}
     />
   );
 }

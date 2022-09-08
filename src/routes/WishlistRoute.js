@@ -14,6 +14,8 @@ export default function WishlistRoute() {
 
   const [modalUpdateItem, setModalUpdateItem] = useState(false);
   const [modalAddItem, setModalAddItem] = useState(false);
+
+  const [itemData, setItemData] = useState([]);
   return (
     <div>
       <Nav />
@@ -33,6 +35,8 @@ export default function WishlistRoute() {
           setModalAddItem,
           modalUpdateItem,
           setModalUpdateItem,
+          itemData,
+          setItemData,
         }}
       >
         <WishlistsRequests />

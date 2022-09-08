@@ -6,7 +6,7 @@ function Item(props) {
   return (
     <div className="items">
       <span key={id}>
-        <p>ID: {id}</p>
+        {/* <p>ID: {id}</p> */}
         <p>Name: {name}</p>
         <p>Details: {details}</p>
         <p>Size: {size}</p>

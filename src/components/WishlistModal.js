@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { WishlistsContext } from "../context/WishlistsContext";
 import "./Modal.css";
 
-function WishlistModal({ toggle, handler }) {
+function WishlistModal({ toggle, handle }) {
   const { setName, setDetails, setItemIds } = useContext(WishlistsContext);
   return (
     <div className="modall">
@@ -14,11 +14,11 @@ function WishlistModal({ toggle, handler }) {
             setName(e.target.value);
           }}
           type="text"
-          placeholder="Item name"
+          placeholder="Wishlist name"
           autoComplete="off"
         ></input>
         <div className="user-input">
-          <form onSubmit={handler}>
+          <form onSubmit={handle}>
             <input
               name="details"
               onChange={(e) => {
@@ -39,7 +39,7 @@ function WishlistModal({ toggle, handler }) {
         </div>
         <div className="btns-div">
           <button onClick={toggle}>Close</button>
-          <button onClick={handler}>Save</button>
+          <button onClick={handle}>Save</button>
         </div>
       </div>
     </div>

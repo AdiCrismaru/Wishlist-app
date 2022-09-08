@@ -7,7 +7,10 @@ function List(props) {
       <span key={id}>
         <p>{name}</p>
         <p>{details}</p>
-        <p>{items}</p>
+
+        {items.map((item) => (
+          <p key={item.id}>{item.name}</p>
+        ))}
       </span>
       <button
         onClick={() => {
