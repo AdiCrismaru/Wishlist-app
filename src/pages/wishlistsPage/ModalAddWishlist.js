@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-import { useWishlists, WishlistsContext } from "../context/WishlistsContext";
+import React from "react";
+import { useWishlists } from "../../context/WishlistsContext";
 
-export default function IdMapModal({ toggle, handle }) {
+export default function ModalAddWishlist({ toggle, handle }) {
   const { setName, setDetails, itemIds, setItemIds, itemData } = useWishlists();
 
   return (

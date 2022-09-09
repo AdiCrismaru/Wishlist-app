@@ -1,9 +1,14 @@
 import React from "react";
-import { useWishlistsUpdate } from "../../context/WishlistsContext";
+import {
+  useWishlists,
+  useWishlistsUpdate,
+} from "../../context/WishlistsContext";
 
 function List(props) {
   const { id, name, details, items } = props.wishlist;
-  const { DELETEhandler, toggleModalUpdateItem } = useWishlistsUpdate();
+  const { DELETEhandler, toggleModalUpdateItem, dltItem } =
+    useWishlistsUpdate();
+  const { itemIds } = useWishlists;
   return (
     <div className="items">
       <span key={id}>
@@ -11,23 +16,29 @@ function List(props) {
         <p>D:{details}</p>
 
         {items.map((item) => (
-          <p key={item.id}>Item: {item.name}</p>
+          <div>
+            <p key={item.id}>Item: {item.name}</p>
+          </div>
         ))}
       </span>
-      <button
-        onClick={() => {
-          DELETEhandler(id);
-        }}
-      >
-        D
-      </button>
-      <button
-        onClick={() => {
-          toggleModalUpdateItem(id);
-        }}
-      >
-        C
-      </button>
+      <div className="buttons">
+        <button
+          className="btn"
+          onClick={() => {
+            DELETEhandler(id);
+          }}
+        >
+          Del
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            toggleModalUpdateItem(id);
+          }}
+        >
+          Upd
+        </button>
+      </div>
     </div>
   );
 }

@@ -13,20 +13,24 @@ function Item(props) {
         <p>Model: {model}</p>
         <p>Link: {link}</p>
       </span>
-      <button
-        onClick={() => {
-          props.handleDeleteItem(id);
-        }}
-      >
-        D
-      </button>
-      <button
-        onClick={() => {
-          props.toggleModalUpdate(id);
-        }}
-      >
-        C
-      </button>
+      <div className="button">
+        <button
+          className="btn"
+          onClick={() => {
+            props.handleDeleteItem(id);
+          }}
+        >
+          Del
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            props.toggleModalUpdate(id);
+          }}
+        >
+          Upd
+        </button>
+      </div>
     </div>
   );
 }

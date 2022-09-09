@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
-import { useWishlists, WishlistsContext } from "../context/WishlistsContext";
-import "./Modal.css";
+import React, { useState } from "react";
+import { useWishlists } from "../../context/WishlistsContext";
+import "../../components/Modal.css";
 
-function WishlistModal({ toggle, handle }) {
+function ModalUpdateWishlist({ toggle, handle }) {
   const { setName, setDetails, setItemIds, itemData, itemIds } = useWishlists();
+  const [holder, setHolder] = useState([]);
+
   return (
     <div className="modall">
       <div onClick={toggle} className="overlay"></div>
@@ -34,7 +36,8 @@ function WishlistModal({ toggle, handle }) {
                     value={item.id}
                     onClick={(e) => {
                       e.preventDefault();
-                      setItemIds([parseInt(e.target.value)]);
+                      // setItemIds();
+                      setItemIds([...itemIds, parseInt(e.target.value)]);
                       console.log(itemIds);
                     }}
                   >
@@ -54,4 +57,4 @@ function WishlistModal({ toggle, handle }) {
   );
 }
 
-export default WishlistModal;
+export default ModalUpdateWishlist;

@@ -27,7 +27,7 @@ export function WishlistsProvider({ children }) {
 
   const token = localStorage.getItem("token");
 
-  const getData = async () => {
+  const getWishlists = async () => {
     const response = await axios.get("/wishlists", {
       headers: {
         authorization: `Bearer ${token}`,
@@ -37,7 +37,7 @@ export function WishlistsProvider({ children }) {
   };
 
   useEffect(() => {
-    getData().catch((err) => {
+    getWishlists().catch((err) => {
       console.log(err);
     });
   }, []);
@@ -61,7 +61,7 @@ export function WishlistsProvider({ children }) {
         setName("");
         setDetails("");
         setItemIds([]);
-        getData();
+        getWishlists();
         toggleModalAddItem();
       })
       .catch((err) => {
@@ -78,7 +78,7 @@ export function WishlistsProvider({ children }) {
       )
       .then((res) => {
         if (res.status === 200) {
-          getData();
+          getWishlists();
         }
       })
       .catch((err) => {
@@ -96,6 +96,7 @@ export function WishlistsProvider({ children }) {
       })
       .then((response) => {
         setItemData(response.data.items);
+        console.log(itemData);
       });
   };
 
@@ -105,7 +106,7 @@ export function WishlistsProvider({ children }) {
         headers: { authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        getData();
+        getWishlists();
       })
       .catch((err) => {
         console.log(err);

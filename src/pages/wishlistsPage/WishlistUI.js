@@ -3,11 +3,10 @@ import {
   useWishlists,
   useWishlistsUpdate,
 } from "../../context/WishlistsContext";
-import WishlistForm from "../../components/WishlistModal";
-import IdMapModal from "../../components/IdMapModal";
+import ModalAddWishlist from "./ModalAddWishlist";
+import ModalUpdateWishlist from "./ModalUpdateWishlist";
 import List from "./List";
 import ModalWrapper from "../../components/ModalWrapper";
-import WishlistModal from "../../components/WishlistModal";
 
 function WishlistUI() {
   const { data, id, modalAddItem, modalUpdateItem } = useWishlists();
@@ -17,6 +16,7 @@ function WishlistUI() {
   const wishlistsMap = data.map((wishlist) => {
     return <List wishlist={wishlist} />;
   });
+
   return (
     <div>
       <div>
@@ -24,7 +24,7 @@ function WishlistUI() {
           Add new
         </button>
         {modalAddItem && (
-          <IdMapModal toggle={toggleModalAddItem} handle={POSThandler} />
+          <ModalAddWishlist toggle={toggleModalAddItem} handle={POSThandler} />
           // <ModalWrapper toggle={toggleModalAddItem} handle={POSThandler}>
           //   <WishlistForm handle={POSThandler} />
           // </ModalWrapper>
@@ -33,7 +33,7 @@ function WishlistUI() {
         {wishlistsMap}
 
         {modalUpdateItem && (
-          <WishlistModal
+          <ModalUpdateWishlist
             toggle={toggleModalUpdateItem}
             handle={() => {
               PUThandler(id);

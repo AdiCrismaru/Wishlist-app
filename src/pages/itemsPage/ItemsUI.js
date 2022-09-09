@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useItems, useItemsUpdate } from "../../context/ItemsContext";
 import ItemModal from "../../components/ItemModal";
-import Item from "../../components/Item";
+import Item from "./Item";
 import "./Items.css";
 import ModalWrapper from "../../components/ModalWrapper";
 import ItemsForm from "./ItemsForm";
+import { GetTest } from "../../components/test";
 
 function ItemsUI() {
   const { data, name, details, size, maker, model, link, id, modal, modalPut } =
@@ -19,6 +20,11 @@ function ItemsUI() {
         toggleModalUpdate={toggleModalUpdate}
       />
     );
+  });
+  useEffect(() => {
+    GetTest().then((res) => {
+      console.log(res);
+    });
   });
 
   return (
@@ -52,7 +58,7 @@ function ItemsUI() {
           />
         </ModalWrapper>
       )}
-      <h1>update values pass id</h1>
+      <h1>update values pass id?</h1>
     </div>
   );
 }

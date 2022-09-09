@@ -35,7 +35,6 @@ export function ItemsProvider({ children }) {
       },
     });
     setData(response.data.items);
-    console.log(data);
   };
 
   useEffect(() => {
