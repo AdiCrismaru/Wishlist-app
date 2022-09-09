@@ -1,13 +1,13 @@
 import React from "react";
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../../components/Button";
 import "./Login&Register.css";
-import { LoginContext } from "../../context/LoginContext";
+import { useLogin, useLoginUpdate } from "../../context/LoginContext";
 
-export default function LoginUI({ handleSubmit }) {
-  const { email, setEmail, password, setPassword, errMsg } =
-    useContext(LoginContext);
+export default function LoginUI() {
+  const { email, setEmail, password, setPassword, errMsg } = useLogin();
+  const handleSubmit = useLoginUpdate();
 
   const userRef = useRef();
   const errRef = useRef();

@@ -1,12 +1,15 @@
 import React from "react";
-import GroupsRequests from "../api/requests/GroupsRequests";
 import Nav from "../components/Nav";
+import { GroupsProvider } from "../context/GroupsContext";
+import GroupsUI from "../pages/groupsPage/GroupsUI";
 
 export default function GroupsRoute() {
   return (
     <div>
       <Nav />
-      <GroupsRequests />
+      <GroupsProvider>
+        <GroupsUI />
+      </GroupsProvider>
     </div>
   );
 }

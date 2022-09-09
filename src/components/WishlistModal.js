@@ -1,24 +1,24 @@
 import React, { useContext } from "react";
-import { WishlistsContext } from "../context/WishlistsContext";
+import { useWishlists, WishlistsContext } from "../context/WishlistsContext";
 import "./Modal.css";
 
 function WishlistModal({ toggle, handle }) {
-  const { setName, setDetails, setItemIds } = useContext(WishlistsContext);
+  const { setName, setDetails, setItemIds, itemData, itemIds } = useWishlists();
   return (
     <div className="modall">
       <div onClick={toggle} className="overlay"></div>
       <div className="modal-content">
-        <input
-          name="name"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-          type="text"
-          placeholder="Wishlist name"
-          autoComplete="off"
-        ></input>
-        <div className="user-input">
-          <form onSubmit={handle}>
+        <form onSubmit={handle}>
+          <div className="user-input">
+            <input
+              name="name"
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+              placeholder="Wishlist name"
+              autoComplete="off"
+            ></input>
             <input
               name="details"
               onChange={(e) => {
@@ -27,16 +27,24 @@ function WishlistModal({ toggle, handle }) {
               type="text"
               placeholder="Details"
             ></input>
-            <input
-              name="IDs"
-              onChange={(e) => {
-                setItemIds(e.target.value);
-              }}
-              type="text"
-              placeholder="IDs"
-            ></input>
-          </form>
-        </div>
+            <select name="name" id="dropdown" required multiple>
+              {itemData.map((item) => {
+                return (
+                  <option
+                    value={item.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setItemIds([parseInt(e.target.value)]);
+                      console.log(itemIds);
+                    }}
+                  >
+                    {item.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </form>
         <div className="btns-div">
           <button onClick={toggle}>Close</button>
           <button onClick={handle}>Save</button>

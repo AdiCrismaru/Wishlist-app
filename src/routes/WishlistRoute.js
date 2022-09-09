@@ -1,46 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Nav from "../components/Nav";
-import { WishlistsContext } from "../context/WishlistsContext";
-import WishlistsRequests from "../api/requests/WishlistsRequests";
+import { WishlistsProvider } from "../context/WishlistsContext";
+import WishlistUI from "../pages/wishlistsPage/WishlistUI";
 
 export default function WishlistRoute() {
-  const [data, setData] = useState([]);
-
-  const [name, setName] = useState("");
-  const [details, setDetails] = useState("");
-
-  const [itemIds, setItemIds] = useState([]);
-  const [id, setId] = useState([]);
-
-  const [modalUpdateItem, setModalUpdateItem] = useState(false);
-  const [modalAddItem, setModalAddItem] = useState(false);
-
-  const [itemData, setItemData] = useState([]);
   return (
     <div>
       <Nav />
-      <WishlistsContext.Provider
-        value={{
-          data,
-          setData,
-          name,
-          setName,
-          details,
-          setDetails,
-          itemIds,
-          setItemIds,
-          id,
-          setId,
-          modalAddItem,
-          setModalAddItem,
-          modalUpdateItem,
-          setModalUpdateItem,
-          itemData,
-          setItemData,
-        }}
-      >
-        <WishlistsRequests />
-      </WishlistsContext.Provider>
+      <WishlistsProvider>
+        <WishlistUI />
+      </WishlistsProvider>
     </div>
   );
 }

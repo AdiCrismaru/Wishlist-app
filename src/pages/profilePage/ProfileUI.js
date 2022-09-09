@@ -8,64 +8,17 @@ import {
   faUser,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
+import { useProfile, useProfileUpdate } from "../../context/ProfileContext";
 
-function ProfileUI({
-  name,
-  email,
-  phone,
-  dob,
-  modal,
+function ProfileUI() {
+  const { name, setName, email, phone, setPhone, dob, setDob, modal } =
+    useProfile();
+  const { toggleModal, updateHandle, logoutHandle } = useProfileUpdate();
 
-  toggleModal,
-  handleSubmit,
-  logoutHandle,
-  changeNameHandler,
-  changePhoneHandler,
-  changeDobHandler,
-}) {
   const formatDate = Moment(dob).format("Do-MMM-YYYY");
-
   return (
     <div>
       <Nav />
-
-      {modal && (
-        <div className="modall">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
-            <input
-              name="name"
-              value={name}
-              onChange={changeNameHandler}
-              type="text"
-              placeholder="Name"
-              autoComplete="off"
-            ></input>
-            <div className="user-input">
-              <form onSubmit={handleSubmit}>
-                <input
-                  name="phone"
-                  value={phone}
-                  onChange={changePhoneHandler}
-                  type="tel"
-                  placeholder="Phone"
-                  autoComplete="off"
-                ></input>
-                <input
-                  name="dob"
-                  value={dob}
-                  onChange={changeDobHandler}
-                  type="date"
-                ></input>
-              </form>
-            </div>
-            <div className="btns-div">
-              <button onClick={toggleModal}>Discard</button>
-              <button onClick={handleSubmit}>Save</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="user-container">
         <div className="top-div">
@@ -102,6 +55,49 @@ function ProfileUI({
           <p>{formatDate}</p>
         </div>
       </div>
+      {modal && (
+        <div className="modall">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modal-content">
+            <input
+              name="name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+              type="text"
+              placeholder="Name"
+              autoComplete="off"
+            ></input>
+            <div className="user-input">
+              <form onSubmit={updateHandle}>
+                <input
+                  name="phone"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                  type="tel"
+                  placeholder="Phone"
+                  autoComplete="off"
+                ></input>
+                <input
+                  name="dob"
+                  value={dob}
+                  onChange={(e) => {
+                    setDob(e.target.value);
+                  }}
+                  type="date"
+                ></input>
+              </form>
+            </div>
+            <div className="btns-div">
+              <button onClick={toggleModal}>Close</button>
+              <button onClick={updateHandle}>Save</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

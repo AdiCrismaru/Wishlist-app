@@ -1,8 +1,8 @@
-import { React, useRef, useContext } from "react";
+import { React, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import OutlinedButton from "../../components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { RegisterContext } from "../../context/RegisterContext";
+import { useRegister, useRegisterUpdate } from "../../context/RegisterContext";
 import "./Login&Register.css";
 import {
   faCheck,
@@ -10,7 +10,7 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function RegisterUI({ handle, handleSubmit, userRef }) {
+export default function RegisterUI() {
   const {
     email,
     setEmail,
@@ -29,7 +29,8 @@ export default function RegisterUI({ handle, handleSubmit, userRef }) {
     phone,
     setPhone,
     errMsg,
-  } = useContext(RegisterContext);
+  } = useRegister();
+  const { handle, handleSubmit, userRef } = useRegisterUpdate();
 
   const errRef = useRef();
   const navigate = useNavigate();

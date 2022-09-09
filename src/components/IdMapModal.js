@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { WishlistsContext } from "../context/WishlistsContext";
+import { useWishlists, WishlistsContext } from "../context/WishlistsContext";
 
 export default function IdMapModal({ toggle, handle }) {
-  const { setName, setDetails, itemIds, setItemIds, itemData } =
-    useContext(WishlistsContext);
+  const { setName, setDetails, itemIds, setItemIds, itemData } = useWishlists();
 
   return (
     <div className="modall">
@@ -37,7 +36,6 @@ export default function IdMapModal({ toggle, handle }) {
                     onClick={(e) => {
                       e.preventDefault();
                       setItemIds([...itemIds, parseInt(e.target.value)]);
-
                       console.log(itemIds);
                     }}
                   >

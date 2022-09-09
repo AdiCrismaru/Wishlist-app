@@ -1,34 +1,58 @@
-import React, { useContext } from "react";
-import { ItemsContext } from "../../context/ItemsContext";
+import React from "react";
+import { useItems, useItemsUpdate } from "../../context/ItemsContext";
 import ItemModal from "../../components/ItemModal";
+import Item from "../../components/Item";
 import "./Items.css";
+import ModalWrapper from "../../components/ModalWrapper";
+import ItemsForm from "./ItemsForm";
 
-function ItemsUI({
-  handleAddItem,
-  toggleModal,
-  mapData,
-  handleUpdateItem,
-  toggleModalPut,
-}) {
-  const { id, modal, modalPut } = useContext(ItemsContext);
+function ItemsUI() {
+  const { data, name, details, size, maker, model, link, id, modal, modalPut } =
+    useItems();
+  const { PostItem, UpdateItem, DeleteItem, toggleModal, toggleModalUpdate } =
+    useItemsUpdate();
+  const mapData = data.map((object) => {
+    return (
+      <Item
+        object={object}
+        handleDeleteItem={DeleteItem}
+        toggleModalUpdate={toggleModalUpdate}
+      />
+    );
+  });
 
   return (
     <div className="wishlist-container">
       <button onClick={toggleModal} className="btn-modal">
         Add new
       </button>
-      {modal && <ItemModal handle={handleAddItem} toggle={toggleModal} />}
+      {modal && (
+        <ModalWrapper handle={PostItem} toggle={toggleModal}>
+          <ItemsForm />
+        </ModalWrapper>
+      )}
 
       {mapData}
 
       {modalPut && (
-        <ItemModal
+        <ModalWrapper
           handle={() => {
-            handleUpdateItem(id);
+            UpdateItem(id);
           }}
-          toggle={toggleModalPut}
-        />
+          toggle={toggleModalUpdate}
+        >
+          <ItemsForm
+            name={name}
+            details={details}
+            size={size}
+            maker={maker}
+            model={model}
+            link={link}
+            data={data}
+          />
+        </ModalWrapper>
       )}
+      <h1>update values pass id</h1>
     </div>
   );
 }

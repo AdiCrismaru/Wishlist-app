@@ -6,7 +6,6 @@ function Item(props) {
   return (
     <div className="items">
       <span key={id}>
-        {/* <p>ID: {id}</p> */}
         <p>Name: {name}</p>
         <p>Details: {details}</p>
         <p>Size: {size}</p>
@@ -23,7 +22,7 @@ function Item(props) {
       </button>
       <button
         onClick={() => {
-          props.toggleModalPut(id);
+          props.toggleModalUpdate(id);
         }}
       >
         C

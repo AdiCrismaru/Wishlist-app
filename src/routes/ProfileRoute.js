@@ -1,6 +1,11 @@
 import React from "react";
-import ProfileRequests from "../api/requests/ProfileRequests";
+import { ProfileProvider } from "../context/ProfileContext";
+import ProfileUI from "../pages/profilePage/ProfileUI";
 
 export default function ProfileRoute() {
-  return <ProfileRequests />;
+  return (
+    <ProfileProvider>
+      <ProfileUI />
+    </ProfileProvider>
+  );
 }

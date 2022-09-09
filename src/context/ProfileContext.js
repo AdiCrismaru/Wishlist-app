@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import ProfileUI from "../../pages/profilePage/ProfileUI";
-import axios from "../axios";
+import axios from "../api/axios";
 
-export default function ProfileRequests() {
+export const ProfileContext = createContext({});
+export const ProfileUpdateContext = createContext();
+
+export function useProfile() {
+  return useContext(ProfileContext);
+}
+export function useProfileUpdate() {
+  return useContext(ProfileUpdateContext);
+}
+
+export function ProfileProvider({ children }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -15,8 +24,8 @@ export default function ProfileRequests() {
 
   const [modal, setModal] = useState(false);
 
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     axios
@@ -34,7 +43,7 @@ export default function ProfileRequests() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = () => {
+  const updateHandle = () => {
     axios
       .put(
         "/me",
@@ -59,34 +68,34 @@ export default function ProfileRequests() {
     navigate("/");
     localStorage.clear();
   };
-
   return (
-    <ProfileUI
-      name={name}
-      email={email}
-      phone={phone}
-      modal={modal}
-      toggleModal={toggleModal}
-      dob={dob}
-      handleSubmit={handleSubmit}
-      logoutHandle={logoutHandle}
-      changeNameHandler={(e) => {
-        setName(e.target.value);
+    <ProfileContext.Provider
+      value={{
+        name,
+        setName,
+        email,
+        setEmail,
+        phone,
+        setPhone,
+        dob,
+        setDob,
+        city,
+        setCity,
+        street,
+        setStreet,
+        zip,
+        setZip,
+        country,
+        setCountry,
+        modal,
+        setModal,
       }}
-      changePhoneHandler={(e) => {
-        setPhone(e.target.value);
-      }}
-      changeDobHandler={(e) => {
-        setDob(e.target.value);
-      }}
-    />
-    // <ProfileUI
-    //   name={data.name}
-    //   email={data.email}
-    //   password={data.password}
-    //   phone={data.phone}
-    //   dob={Date(data.dob)}
-    //   data={data}
-    // />
+    >
+      <ProfileUpdateContext.Provider
+        value={{ updateHandle, logoutHandle, toggleModal }}
+      >
+        {children}
+      </ProfileUpdateContext.Provider>
+    </ProfileContext.Provider>
   );
 }

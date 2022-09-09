@@ -8,6 +8,7 @@ import RegisterRoute from "./routes/RegisterRoute";
 import LoginRoute from "./routes/LoginRoute";
 import ErrorRoute from "./routes/ErrorRoute";
 import UsersRoute from "./routes/UsersRoute";
+import { ItemsContext, ItemsProvider } from "./context/ItemsContext";
 
 function App() {
   return (

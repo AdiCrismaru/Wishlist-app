@@ -1,7 +1,16 @@
-import React, { useEffect, useState } from "react";
-import axios from "../axios";
+import { createContext, useState, useEffect, useContext } from "react";
+import axios from "../api/axios";
 
-export default function GroupsRequests() {
+export const GroupsContext = createContext();
+export const GroupsUpdateContext = createContext();
+
+export function useGroups() {
+  return useContext(GroupsContext);
+}
+export function useGroupsUpdate() {
+  return useContext(GroupsUpdateContext);
+}
+export function GroupsProvider({ children }) {
   const token = localStorage.getItem("token");
 
   const [groups, setGroups] = useState([]);
@@ -41,6 +50,13 @@ export default function GroupsRequests() {
         console.log(err);
       });
   };
-
-  return <div>GroupsRequests</div>;
+  return (
+    <GroupsContext.Provider
+      value={{ groups, setGroups, name, setName, details, setDetails }}
+    >
+      <GroupsUpdateContext.Provider value={{ PostGroups }}>
+        {children}
+      </GroupsUpdateContext.Provider>
+    </GroupsContext.Provider>
+  );
 }
