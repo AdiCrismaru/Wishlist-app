@@ -19,6 +19,13 @@ export function ItemsProvider({ children }) {
   const [model, setModel] = useState("");
   const [link, setLink] = useState("");
 
+  const [nameUpdate, setNameUpdate] = useState("");
+  const [detailsUpdate, setDetailsUpdate] = useState("");
+  const [sizeUpdate, setSizeUpdate] = useState("");
+  const [makerUpdate, setMakerUpdate] = useState("");
+  const [modelUpdate, setModelUpdate] = useState("");
+  const [linkUpdate, setLinkUpdate] = useState("");
+
   const [id, setId] = useState("");
 
   const [modal, setModal] = useState(false);
@@ -34,7 +41,7 @@ export function ItemsProvider({ children }) {
         authorization: `Bearer ${token}`,
       },
     });
-    setData(response.data.items);
+    setData(response.data.items.reverse());
   };
 
   useEffect(() => {
@@ -82,7 +89,14 @@ export function ItemsProvider({ children }) {
     axios
       .put(
         `/items/${id}`,
-        { name, details, size, maker, model, link },
+        {
+          name: nameUpdate,
+          details: detailsUpdate,
+          size: sizeUpdate,
+          maker: makerUpdate,
+          model: modelUpdate,
+          link: linkUpdate,
+        },
         { headers: { authorization: `Bearer ${token}` } }
       )
       .then((res) => {
@@ -93,7 +107,8 @@ export function ItemsProvider({ children }) {
       .catch((err) => {
         console.log(err);
       });
-    toggleModalUpdate();
+    // toggleModalUpdate();
+    setModalPut(false);
   };
 
   const DeleteItem = (id) => {
@@ -114,9 +129,19 @@ export function ItemsProvider({ children }) {
   const toggleModal = () => {
     setModal(!modal);
   };
+
   const toggleModalUpdate = (id) => {
-    setModalPut(!modalPut);
     setId(id);
+    setModalPut(true);
+    const newItem = data.find((obj) => {
+      return obj.id === id;
+    });
+    setNameUpdate(newItem.name);
+    setDetailsUpdate(newItem.details);
+    setSizeUpdate(newItem.size);
+    setMakerUpdate(newItem.maker);
+    setModelUpdate(newItem.model);
+    setLinkUpdate(newItem.link);
   };
 
   return (
@@ -134,6 +159,18 @@ export function ItemsProvider({ children }) {
         setModel,
         link,
         setLink,
+        nameUpdate,
+        setNameUpdate,
+        detailsUpdate,
+        setDetailsUpdate,
+        sizeUpdate,
+        setSizeUpdate,
+        makerUpdate,
+        setMakerUpdate,
+        modelUpdate,
+        setModelUpdate,
+        linkUpdate,
+        setLinkUpdate,
         id,
         setId,
         data,

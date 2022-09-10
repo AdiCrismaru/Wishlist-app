@@ -16,8 +16,13 @@ export function WishlistsProvider({ children }) {
 
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
-
   const [itemIds, setItemIds] = useState([]);
+
+  const [nameUpdate, setNameUpdate] = useState("");
+  const [detailsUpdate, setDetailsUpdate] = useState("");
+  const [itemIdsUpdate, setItemIdsUpdate] = useState([]);
+  const [itemIdHolder, setItemIdHolder] = useState([]);
+
   const [id, setId] = useState([]);
 
   const [modalUpdateItem, setModalUpdateItem] = useState(false);
@@ -33,7 +38,7 @@ export function WishlistsProvider({ children }) {
         authorization: `Bearer ${token}`,
       },
     });
-    setData(response.data.wishlists);
+    setData(response.data.wishlists.reverse());
   };
 
   useEffect(() => {
@@ -73,18 +78,23 @@ export function WishlistsProvider({ children }) {
     axios
       .put(
         `/wishlists/${id}`,
-        { wishlist: { name, details }, itemIds },
+        {
+          wishlist: { name: nameUpdate, details: detailsUpdate },
+          itemIds: itemIdsUpdate,
+        },
         { headers: { authorization: `Bearer ${token}` } }
       )
       .then((res) => {
         if (res.status === 200) {
           getWishlists();
+          console.log(res);
         }
       })
       .catch((err) => {
         console.log(err);
       });
-    toggleModalUpdateItem();
+    // toggleModalUpdateItem();
+    setModalUpdateItem(false);
   };
 
   const getItems = async () => {
@@ -96,7 +106,6 @@ export function WishlistsProvider({ children }) {
       })
       .then((response) => {
         setItemData(response.data.items);
-        console.log(itemData);
       });
   };
 
@@ -118,10 +127,28 @@ export function WishlistsProvider({ children }) {
     getItems();
   };
 
+  const arr = [];
+
   const toggleModalUpdateItem = (id) => {
     setModalUpdateItem(!modalUpdateItem);
     setId(id);
     getItems();
+    const listValues = data.find((list) => {
+      return list.id === id;
+    });
+    if (!modalUpdateItem) {
+      setNameUpdate(listValues.name);
+      setDetailsUpdate(listValues.details);
+      setItemIdHolder(listValues.items);
+
+      itemIdHolder.map((item) => {
+        arr.push(item.id);
+      });
+
+      setItemIdsUpdate(arr);
+      console.log(itemIdsUpdate);
+      console.log(arr);
+    }
   };
 
   return (
@@ -131,10 +158,18 @@ export function WishlistsProvider({ children }) {
         setData,
         name,
         setName,
+        nameUpdate,
+        setNameUpdate,
         details,
         setDetails,
+        detailsUpdate,
+        setDetailsUpdate,
         itemIds,
         setItemIds,
+        itemIdsUpdate,
+        setItemIdsUpdate,
+        itemIdHolder,
+        setItemIdHolder,
         id,
         setId,
         modalAddItem,

@@ -5,9 +5,9 @@ import { useItems, useItemsUpdate } from "../../context/ItemsContext";
 function ItemsForm() {
   const { setName, setDetails, setSize, setMaker, setModel, setLink } =
     useItems();
-  const { UpdateItem } = useItemsUpdate();
+  const { PostItem } = useItemsUpdate;
   return (
-    <form onSubmit={UpdateItem}>
+    <form onSubmit={PostItem}>
       <div className="user-input">
         <input
           name="name"

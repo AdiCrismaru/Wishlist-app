@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import { useWishlists } from "../../context/WishlistsContext";
 import "../../components/Modal.css";
+import { MultiSelect } from "primereact/multiselect";
 
 function ModalUpdateWishlist({ toggle, handle }) {
-  const { setName, setDetails, setItemIds, itemData, itemIds } = useWishlists();
-  const [holder, setHolder] = useState([]);
+  const {
+    nameUpdate,
+    setNameUpdate,
+    detailsUpdate,
+    setDetailsUpdate,
+    itemIdsUpdate,
+    setItemIdsUpdate,
+    itemData,
+    itemIdHolder,
+  } = useWishlists();
 
   return (
     <div className="modall">
@@ -14,8 +23,9 @@ function ModalUpdateWishlist({ toggle, handle }) {
           <div className="user-input">
             <input
               name="name"
+              value={nameUpdate}
               onChange={(e) => {
-                setName(e.target.value);
+                setNameUpdate(e.target.value);
               }}
               type="text"
               placeholder="Wishlist name"
@@ -23,8 +33,9 @@ function ModalUpdateWishlist({ toggle, handle }) {
             ></input>
             <input
               name="details"
+              value={detailsUpdate}
               onChange={(e) => {
-                setDetails(e.target.value);
+                setDetailsUpdate(e.target.value);
               }}
               type="text"
               placeholder="Details"
@@ -35,10 +46,12 @@ function ModalUpdateWishlist({ toggle, handle }) {
                   <option
                     value={item.id}
                     onClick={(e) => {
+                      console.log(item.id);
                       e.preventDefault();
-                      // setItemIds();
-                      setItemIds([...itemIds, parseInt(e.target.value)]);
-                      console.log(itemIds);
+                      setItemIdsUpdate([
+                        ...itemIdsUpdate,
+                        parseInt(e.target.value),
+                      ]);
                     }}
                   >
                     {item.name}

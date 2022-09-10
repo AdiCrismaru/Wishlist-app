@@ -4,8 +4,8 @@ import ProfileUI from "../pages/profilePage/ProfileUI";
 
 export default function ProfileRoute() {
   return (
-    <ProfileProvider>
-      <ProfileUI />
-    </ProfileProvider>
+    <ProfileUI />
+    // <ProfileProvider>
+    // </ProfileProvider>
   );
 }

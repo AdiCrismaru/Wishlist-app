@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Nav from "../../components/Nav";
 import Moment from "moment";
@@ -9,13 +9,52 @@ import {
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 import { useProfile, useProfileUpdate } from "../../context/ProfileContext";
+import ModalWrapper from "../../components/ModalWrapper";
+import ProfileUpdateModal from "../../components/ProfileUpdateModal";
+import { useNavigate } from "react-router-dom";
+import { getProfileInfo, putProfileInfo } from "../../api/ProfileAxios";
 
 function ProfileUI() {
-  const { name, setName, email, phone, setPhone, dob, setDob, modal } =
-    useProfile();
-  const { toggleModal, updateHandle, logoutHandle } = useProfileUpdate();
+  const [data, setData] = useState({});
 
-  const formatDate = Moment(dob).format("Do-MMM-YYYY");
+  const [modal, setModal] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getProfileInfo()
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((res) => console.log(res));
+  }, []);
+
+  const onSubmitHandler = (payload) => {
+    putProfileInfo(payload)
+      .then((res) => {
+        console.log(res);
+        toggleModal();
+        setData({
+          ...data,
+          name: payload.name,
+          phone: payload.phone,
+          dob: payload.dob,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+  const logoutHandle = () => {
+    navigate("/");
+    localStorage.clear();
+  };
+  const formatDate = Moment(data.dob).format("Do-MMM-YYYY");
+  console.log(Date.now());
   return (
     <div>
       <Nav />
@@ -37,17 +76,17 @@ function ProfileUI() {
         <hr />
         <div className="user-info">
           <p>Name:</p>
-          <p>{name}</p>
+          <p>{data.name}</p>
         </div>
         <hr />
         <div className="user-info">
           <p>Email:</p>
-          <p>{email}</p>
+          <p>{data.email}</p>
         </div>
         <hr />
         <div className="user-info">
           <p>Phone:</p>
-          <span>{phone}</span>
+          <span>{data.phone}</span>
         </div>
         <hr />
         <div className="user-info">
@@ -56,47 +95,9 @@ function ProfileUI() {
         </div>
       </div>
       {modal && (
-        <div className="modall">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
-            <input
-              name="name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              type="text"
-              placeholder="Name"
-              autoComplete="off"
-            ></input>
-            <div className="user-input">
-              <form onSubmit={updateHandle}>
-                <input
-                  name="phone"
-                  value={phone}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                  type="tel"
-                  placeholder="Phone"
-                  autoComplete="off"
-                ></input>
-                <input
-                  name="dob"
-                  value={dob}
-                  onChange={(e) => {
-                    setDob(e.target.value);
-                  }}
-                  type="date"
-                ></input>
-              </form>
-            </div>
-            <div className="btns-div">
-              <button onClick={toggleModal}>Close</button>
-              <button onClick={updateHandle}>Save</button>
-            </div>
-          </div>
-        </div>
+        <ModalWrapper close={toggleModal}>
+          <ProfileUpdateModal user={data} onSubmitHandler={onSubmitHandler} />
+        </ModalWrapper>
       )}
     </div>
   );

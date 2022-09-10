@@ -26,8 +26,9 @@ export default function ModalAddWishlist({ toggle, handle }) {
               }}
               type="text"
               placeholder="Details"
+              autoComplete="off"
             ></input>
-            <label htmlFor="dropdown">Choose item:</label>
+            <label htmlFor="dropdown">Choose items:</label>
             <select name="name" id="dropdown" required multiple>
               {itemData.map((object) => {
                 return (

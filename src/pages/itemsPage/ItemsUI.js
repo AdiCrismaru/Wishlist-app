@@ -5,13 +5,31 @@ import Item from "./Item";
 import "./Items.css";
 import ModalWrapper from "../../components/ModalWrapper";
 import ItemsForm from "./ItemsForm";
-import { GetTest } from "../../components/test";
+import { getItems } from "../../api/ItemsAxios";
 
 function ItemsUI() {
-  const { data, name, details, size, maker, model, link, id, modal, modalPut } =
-    useItems();
+  const {
+    data,
+    setNameUpdate,
+    nameUpdate,
+    setDetailsUpdate,
+    detailsUpdate,
+    setSizeUpdate,
+    sizeUpdate,
+    setMakerUpdate,
+    makerUpdate,
+    setModelUpdate,
+    modelUpdate,
+    setLinkUpdate,
+    linkUpdate,
+    id,
+    modal,
+    modalPut,
+    setModalPut,
+  } = useItems();
   const { PostItem, UpdateItem, DeleteItem, toggleModal, toggleModalUpdate } =
     useItemsUpdate();
+
   const mapData = data.map((object) => {
     return (
       <Item
@@ -21,11 +39,12 @@ function ItemsUI() {
       />
     );
   });
+
   useEffect(() => {
-    GetTest().then((res) => {
-      console.log(res);
+    getItems().catch((err) => {
+      console.log(err);
     });
-  });
+  }, []);
 
   return (
     <div className="wishlist-container">
@@ -33,8 +52,8 @@ function ItemsUI() {
         Add new
       </button>
       {modal && (
-        <ModalWrapper handle={PostItem} toggle={toggleModal}>
-          <ItemsForm />
+        <ModalWrapper save={PostItem} close={toggleModal}>
+          <ItemsForm save={PostItem} />
         </ModalWrapper>
       )}
 
@@ -42,23 +61,74 @@ function ItemsUI() {
 
       {modalPut && (
         <ModalWrapper
-          handle={() => {
+          save={() => {
             UpdateItem(id);
           }}
-          toggle={toggleModalUpdate}
+          close={() => {
+            setModalPut(false);
+          }}
         >
-          <ItemsForm
-            name={name}
-            details={details}
-            size={size}
-            maker={maker}
-            model={model}
-            link={link}
-            data={data}
-          />
+          <form onSubmit={PostItem}>
+            <div className="user-input">
+              <input
+                name="name"
+                value={nameUpdate}
+                onChange={(e) => {
+                  setNameUpdate(e.target.value);
+                }}
+                type="text"
+                placeholder="Item name"
+                autoComplete="off"
+              ></input>
+              <input
+                name="details"
+                value={detailsUpdate}
+                onChange={(e) => {
+                  setDetailsUpdate(e.target.value);
+                }}
+                type="text"
+                placeholder="Details"
+              ></input>
+              <input
+                name="size"
+                value={sizeUpdate}
+                onChange={(e) => {
+                  setSizeUpdate(e.target.value);
+                }}
+                type="text"
+                placeholder="Size"
+              ></input>
+              <input
+                name="maker"
+                value={makerUpdate}
+                onChange={(e) => {
+                  setMakerUpdate(e.target.value);
+                }}
+                type="text"
+                placeholder="Maker"
+              ></input>
+              <input
+                name="model"
+                value={modelUpdate}
+                onChange={(e) => {
+                  setModelUpdate(e.target.value);
+                }}
+                type="text"
+                placeholder="Model"
+              ></input>
+              <input
+                name="link"
+                value={linkUpdate}
+                onChange={(e) => {
+                  setLinkUpdate(e.target.value);
+                }}
+                type="text"
+                placeholder="Link"
+              ></input>
+            </div>
+          </form>
         </ModalWrapper>
       )}
-      <h1>update values pass id?</h1>
     </div>
   );
 }
