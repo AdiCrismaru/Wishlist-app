@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useProfile, useProfileUpdate } from "../../context/ProfileContext";
 import ModalWrapper from "../../components/ModalWrapper";
-import ProfileUpdateModal from "../../components/ProfileUpdateModal";
+import ProfileUpdateModal from "./ProfileUpdateModal";
 import { useNavigate } from "react-router-dom";
 import { getProfileInfo, putProfileInfo } from "../../api/ProfileAxios";
 
@@ -54,7 +54,6 @@ function ProfileUI() {
     localStorage.clear();
   };
   const formatDate = Moment(data.dob).format("Do-MMM-YYYY");
-  console.log(Date.now());
   return (
     <div>
       <Nav />
@@ -94,6 +93,7 @@ function ProfileUI() {
           <p>{formatDate}</p>
         </div>
       </div>
+
       {modal && (
         <ModalWrapper close={toggleModal}>
           <ProfileUpdateModal user={data} onSubmitHandler={onSubmitHandler} />

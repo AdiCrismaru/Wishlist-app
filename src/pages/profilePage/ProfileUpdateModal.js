@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import axios from "../api/axios";
-import { putProfileInfo } from "../api/ProfileAxios";
 
 function ProfileUpdateModal({ user, onSubmitHandler }) {
   const [data, setData] = useState({

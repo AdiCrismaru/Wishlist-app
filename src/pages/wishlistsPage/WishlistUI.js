@@ -1,53 +1,34 @@
-import React from "react";
-import {
-  useWishlists,
-  useWishlistsUpdate,
-} from "../../context/WishlistsContext";
+import React, { useState, useEffect } from "react";
+import UpdateList from "./UpdateList";
+import { getWishlists } from "../../api/WishlistAxios";
 import ModalAddWishlist from "./ModalAddWishlist";
-import ModalUpdateWishlist from "./ModalUpdateWishlist";
-import List from "./List";
-import ModalWrapper from "../../components/ModalWrapper";
 
 function WishlistUI() {
-  const { data, id, modalAddItem, modalUpdateItem } = useWishlists();
-  const { POSThandler, PUThandler, toggleModalAddItem, toggleModalUpdateItem } =
-    useWishlistsUpdate();
+  const [data, setData] = useState([]);
 
-  const wishlistsMap = data.map((wishlist) => {
-    return <List wishlist={wishlist} />;
+  const setWishlist = () => {
+    getWishlists()
+      .then((res) => {
+        setData(res.data.wishlists);
+        // console.log(res.data.wishlists);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    setWishlist();
+  }, []);
+
+  const wishlistsMap = data.map((object) => {
+    return <UpdateList data={data} object={object} setWishlist={setWishlist} />;
   });
-
   return (
     <div>
-      <div>
-        <button onClick={toggleModalAddItem} className="btn-modal">
-          Add new
-        </button>
-        {modalAddItem && (
-          <ModalAddWishlist toggle={toggleModalAddItem} handle={POSThandler} />
-          // <ModalWrapper toggle={toggleModalAddItem} handle={POSThandler}>
-          //   <WishlistForm handle={POSThandler} />
-          // </ModalWrapper>
-        )}
+      <ModalAddWishlist setWishlist={setWishlist} />
 
-        {wishlistsMap}
-
-        {modalUpdateItem && (
-          <ModalUpdateWishlist
-            toggle={toggleModalUpdateItem}
-            handle={() => {
-              PUThandler(id);
-            }}
-          />
-          // <ModalWrapper toggle={toggleModalUpdateItem} handle={PUThandler}>
-          //   <WishlistForm
-          //     handle={() => {
-          //       PUThandler(id);
-          //     }}
-          //   />
-          // </ModalWrapper>
-        )}
-      </div>
+      {wishlistsMap}
     </div>
   );
 }

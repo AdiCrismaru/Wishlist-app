@@ -44,15 +44,13 @@ export function ItemsProvider({ children }) {
     setData(response.data.items.reverse());
   };
 
-  useEffect(() => {
-    GetItems().catch((err) => {
-      console.log(err);
-    });
-  }, []);
+  // useEffect(() => {
+  //   GetItems().catch((err) => {
+  //     console.log(err);
+  //   });
+  // }, []);
 
   const PostItem = async (e) => {
-    e.preventDefault();
-
     try {
       if (name && details && size && maker && model && link) {
         await axios.post(
@@ -130,20 +128,6 @@ export function ItemsProvider({ children }) {
     setModal(!modal);
   };
 
-  const toggleModalUpdate = (id) => {
-    setId(id);
-    setModalPut(true);
-    const newItem = data.find((obj) => {
-      return obj.id === id;
-    });
-    setNameUpdate(newItem.name);
-    setDetailsUpdate(newItem.details);
-    setSizeUpdate(newItem.size);
-    setMakerUpdate(newItem.maker);
-    setModelUpdate(newItem.model);
-    setLinkUpdate(newItem.link);
-  };
-
   return (
     <ItemsContext.Provider
       value={{
@@ -188,7 +172,6 @@ export function ItemsProvider({ children }) {
           UpdateItem,
           DeleteItem,
           toggleModal,
-          toggleModalUpdate,
         }}
       >
         {children}

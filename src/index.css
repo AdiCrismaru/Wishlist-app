@@ -42,8 +42,8 @@ nav > img {
   margin-bottom: 10px;
 }
 .wrapper {
-  display: flex;
   justify-content: center;
+  display: flex;
   text-align: center;
   line-height: 15px;
 }

@@ -7,9 +7,7 @@ export default function WishlistRoute() {
   return (
     <div>
       <Nav />
-      <WishlistsProvider>
-        <WishlistUI />
-      </WishlistsProvider>
+      <WishlistUI />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Modal.css";
 
-function ModalWrapper({ children, save, close }) {
+function ModalWrapper({ children, close }) {
   return (
     <div className="modall">
       <div onClick={close} className="overlay"></div>
@@ -9,7 +9,6 @@ function ModalWrapper({ children, save, close }) {
         {children}
         <div className="btns-div">
           <button onClick={close}>Close</button>
-          {/* <button onClick={save}>Save</button> */}
         </div>
       </div>
     </div>

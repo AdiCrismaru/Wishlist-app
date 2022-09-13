@@ -1,66 +1,59 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../components/Modal.css";
-import { useItems, useItemsUpdate } from "../../context/ItemsContext";
 
-function ItemsForm() {
-  const { setName, setDetails, setSize, setMaker, setModel, setLink } =
-    useItems();
-  const { PostItem } = useItemsUpdate;
+export default function ItemAddForm({ postItemHandler }) {
+  const [data, setData] = useState({});
+
+  const onChangeHandler = (e) => {
+    setData({ ...data, [e.target.name]: e.target.value });
+  };
   return (
-    <form onSubmit={PostItem}>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        postItemHandler(data);
+      }}
+    >
       <div className="user-input">
         <input
           name="name"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          onChange={onChangeHandler}
           type="text"
           placeholder="Item name"
           autoComplete="off"
         ></input>
         <input
           name="details"
-          onChange={(e) => {
-            setDetails(e.target.value);
-          }}
+          onChange={onChangeHandler}
           type="text"
           placeholder="Details"
         ></input>
         <input
           name="size"
-          onChange={(e) => {
-            setSize(e.target.value);
-          }}
+          onChange={onChangeHandler}
           type="text"
           placeholder="Size"
         ></input>
         <input
           name="maker"
-          onChange={(e) => {
-            setMaker(e.target.value);
-          }}
+          onChange={onChangeHandler}
           type="text"
           placeholder="Maker"
         ></input>
         <input
           name="model"
-          onChange={(e) => {
-            setModel(e.target.value);
-          }}
+          onChange={onChangeHandler}
           type="text"
           placeholder="Model"
         ></input>
         <input
           name="link"
-          onChange={(e) => {
-            setLink(e.target.value);
-          }}
+          onChange={onChangeHandler}
           type="text"
           placeholder="Link"
         ></input>
+        <input type="submit" value="Add" />
       </div>
     </form>
   );
 }
-
-export default ItemsForm;

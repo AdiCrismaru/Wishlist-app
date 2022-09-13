@@ -1,57 +1,46 @@
-import React from "react";
-import { useWishlists } from "../../context/WishlistsContext";
+import React, { useState } from "react";
+import WishlistAddForm from "./WishlistAddForm";
+import ModalWrapper from "../../components/ModalWrapper";
+import { postWishlist } from "../../api/WishlistAxios";
 
-export default function ModalAddWishlist({ toggle, handle }) {
-  const { setName, setDetails, itemIds, setItemIds, itemData } = useWishlists();
+export default function ModalAddWishlist(props) {
+  const [data, setData] = useState({});
 
+  const [modal, setModal] = useState(false);
+
+  const postWishlistHandler = (payload) => {
+    postWishlist(payload)
+      .then(() => {
+        setData({
+          ...data,
+          wishlist: {
+            name: payload.wishlist.name,
+            details: payload.wishlist.details,
+          },
+          itemIds: [payload.itemIds],
+        });
+        props.setWishlist();
+
+        toggleModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
   return (
-    <div className="modall">
-      <div onClick={toggle} className="overlay"></div>
-      <div className="modal-content">
-        <form onSubmit={handle}>
-          <input
-            name="name"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            type="text"
-            placeholder="Wishlist name"
-            autoComplete="off"
-          ></input>
-          <div className="user-input">
-            <input
-              name="details"
-              onChange={(e) => {
-                setDetails(e.target.value);
-              }}
-              type="text"
-              placeholder="Details"
-              autoComplete="off"
-            ></input>
-            <label htmlFor="dropdown">Choose items:</label>
-            <select name="name" id="dropdown" required multiple>
-              {itemData.map((object) => {
-                return (
-                  <option
-                    value={object.id}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setItemIds([...itemIds, parseInt(e.target.value)]);
-                      console.log(itemIds);
-                    }}
-                  >
-                    {object.name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </form>
-        <div className="btns-div">
-          <button onClick={toggle}>Close</button>
-          <button onClick={handle}>Save</button>
-        </div>
-      </div>
-    </div>
+    <>
+      <button onClick={toggleModal} className="btn-modal">
+        Add new
+      </button>
+      {modal && (
+        <ModalWrapper close={toggleModal}>
+          <WishlistAddForm postWishlistHandler={postWishlistHandler} />
+        </ModalWrapper>
+      )}
+    </>
   );
 }
