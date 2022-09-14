@@ -9,8 +9,7 @@ function WishlistUI() {
   const setWishlist = () => {
     getWishlists()
       .then((res) => {
-        setData(res.data.wishlists);
-        // console.log(res.data.wishlists);
+        setData(res.data.wishlists.reverse());
       })
       .catch((err) => {
         console.log(err);
@@ -21,9 +20,17 @@ function WishlistUI() {
     setWishlist();
   }, []);
 
+  // const removeItemHandler = (id, items) => {
+  //   const filteredArr = items.filter((obj) => {
+  //     return obj.id !== id;
+  //   });
+  //   console.log(filteredArr);
+  // };
+
   const wishlistsMap = data.map((object) => {
     return <UpdateList data={data} object={object} setWishlist={setWishlist} />;
   });
+
   return (
     <div>
       <ModalAddWishlist setWishlist={setWishlist} />

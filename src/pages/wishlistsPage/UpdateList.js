@@ -4,8 +4,8 @@ import { deleteWishlist, updateWishlists } from "../../api/WishlistAxios";
 import ModalWrapper from "../../components/ModalWrapper";
 
 export default function UpdateList(props) {
-  const { id, name, details, items } = props.object;
-  console.log(props.object);
+  const object = props.object;
+  const { id, name, details, items } = object;
 
   const [modalUpdate, setModalUpdate] = useState(false);
 
@@ -41,18 +41,18 @@ export default function UpdateList(props) {
   const toggleModalUpdate = () => {
     setModalUpdate(!modalUpdate);
   };
-  console.log(items);
   return (
     <div key={id} className="items">
-      <span>
-        <p>N:{name}</p>
-        <p>D:{details}</p>
+      <ul>
+        <li>N:{name}</li>
+        <li>D:{details}</li>
+
         {items.map((item) => (
           <div key={item.id}>
-            <p>Item: {item.name}</p>
+            <li>Item: {item.name}</li>
           </div>
         ))}
-      </span>
+      </ul>
       <div className="buttons">
         <button
           className="btn"

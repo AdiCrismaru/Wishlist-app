@@ -1,15 +1,5 @@
-import { createContext, useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
 
-export const GroupsContext = createContext();
-export const GroupsUpdateContext = createContext();
-
-export function useGroups() {
-  return useContext(GroupsContext);
-}
-export function useGroupsUpdate() {
-  return useContext(GroupsUpdateContext);
-}
 export function GroupsProvider({ children }) {
   const token = localStorage.getItem("token");
 

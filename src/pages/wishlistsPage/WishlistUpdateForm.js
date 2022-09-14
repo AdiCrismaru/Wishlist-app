@@ -17,7 +17,6 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
   }, []);
 
   const onChangeHandler = (e) => {
-    console.log(data);
     const [section, key] = e.target.name.split(".");
     if (key) {
       setData({
@@ -30,7 +29,6 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
   };
 
   const onSelectHandler = (e) => {
-    console.log(data.itemIds);
     const value = parseInt(e.target.value);
     let listCopy = data.itemIds;
     if (listCopy.includes(value)) {
@@ -63,22 +61,21 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
         type="text"
         placeholder="Details"
       ></input>
-      <select name="ids" id="dropdown" multiple>
-        {itemData.map((item) => {
-          return (
-            <option
-              key={item.id}
-              value={item.id}
-              selected={data.itemIds.includes(item.id)}
-              onClick={onSelectHandler}
-              // setData({ ...data, itemIds: ids });
-              // setIds([...ids, parseInt(e.target.value)]);
-            >
+      {itemData.map((item) => {
+        return (
+          <div key={item.id}>
+            <label>
+              <input
+                type="checkbox"
+                value={item.id}
+                checked={data.itemIds.includes(item.id)}
+                onClick={onSelectHandler}
+              />
               {item.name}
-            </option>
-          );
-        })}
-      </select>
+            </label>
+          </div>
+        );
+      })}
 
       <input type="submit" value="update" />
     </form>

@@ -44,14 +44,14 @@ export default function UpdateItem(props) {
 
   return (
     <div key={id} className="items">
-      <span>
-        <p>Name: {name}</p>
-        <p>Details: {details}</p>
-        <p>Size: {size}</p>
-        <p>Maker: {maker}</p>
-        <p>Model: {model}</p>
-        <p>Link: {link}</p>
-      </span>
+      <ul>
+        <li>Name: {name}</li>
+        <li>Details: {details}</li>
+        <li>Size: {size}</li>
+        <li>Maker: {maker}</li>
+        <li>Model: {model}</li>
+        <li>Link: {link}</li>
+      </ul>
       <div className="button">
         <button
           className="btn"

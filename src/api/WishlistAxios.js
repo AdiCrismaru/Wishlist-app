@@ -1,10 +1,11 @@
 import axios from "./axios";
+
 const token = localStorage.getItem("token");
 
 export const getWishlists = async () => {
   return await axios.get("/wishlists", {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };

@@ -59,3 +59,13 @@ nav > img {
 .btn {
   border: 1px solid;
 }
+.shared-groups-golder {
+  display: flex;
+}
+
+.shared-groups {
+  display: flex;
+  justify-content: center;
+  border: 1px solid;
+  margin: 40px;
+}

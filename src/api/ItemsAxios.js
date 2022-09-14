@@ -4,7 +4,7 @@ const token = localStorage.getItem("token");
 export const getItems = async () => {
   return await axios.get("/items", {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };

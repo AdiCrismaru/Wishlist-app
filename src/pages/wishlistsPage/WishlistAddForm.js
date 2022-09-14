@@ -31,6 +31,17 @@ export default function WishlistAddForm({ postWishlistHandler }) {
     }
   };
 
+  const onSelectHandler = (e) => {
+    const value = parseInt(e.target.value);
+    let listCopy = data.itemIds;
+    if (listCopy.includes(value)) {
+      listCopy.splice(listCopy.indexOf(value), 1);
+    } else {
+      listCopy.push(value);
+    }
+    setData({ ...data, itemIds: listCopy });
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -51,23 +62,21 @@ export default function WishlistAddForm({ postWishlistHandler }) {
         type="text"
         placeholder="Details"
       ></input>
-      <select name="itemIds" id="dropdown" required multiple>
-        {itemData.map((item) => {
-          return (
-            <option
-              key={item.id}
-              value={item.id}
-              selected="true"
-              onClick={(e) => {
-                setData({ ...data, itemIds: itemIds });
-                setItemIds([...itemIds, parseInt(e.target.value)]);
-              }}
-            >
+      {itemData.map((item) => {
+        return (
+          <div key={item.id}>
+            <label>
+              <input
+                type="checkbox"
+                value={item.id}
+                checked={data.itemIds.includes(item.id)}
+                onClick={onSelectHandler}
+              />
               {item.name}
-            </option>
-          );
-        })}
-      </select>
+            </label>
+          </div>
+        );
+      })}
 
       <input type="submit" value="Add" />
     </form>
