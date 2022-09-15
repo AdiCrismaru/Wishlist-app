@@ -8,7 +8,7 @@ import RegisterRoute from "./routes/RegisterRoute";
 import LoginRoute from "./routes/LoginRoute";
 import ErrorRoute from "./routes/ErrorRoute";
 import UsersRoute from "./routes/UsersRoute";
-import { ItemsContext, ItemsProvider } from "./context/ItemsContext";
+import SharedGroupsRoute from "./routes/SharedGroupsRoute";
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/wishlist" element={<WishlistRoute />} />
           <Route path="/groups" element={<GroupsRoute />} />
+          <Route path="/shared-groups" element={<SharedGroupsRoute />} />
           <Route path="/profile" element={<ProfileRoute />} />
           <Route path="/items" element={<ItemsRoute />} />
           <Route path="/users" element={<UsersRoute />} />

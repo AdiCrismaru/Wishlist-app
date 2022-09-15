@@ -15,6 +15,7 @@ nav {
   min-height: 10vh;
   background-color: #9678b6;
   color: white;
+  margin-bottom: 25px;
 }
 nav > img {
   max-width: 170px;
@@ -68,4 +69,8 @@ nav > img {
   justify-content: center;
   border: 1px solid;
   margin: 40px;
+}
+.container-flex {
+  display: flex;
+  flex-wrap: wrap;
 }

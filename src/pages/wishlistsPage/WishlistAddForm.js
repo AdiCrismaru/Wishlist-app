@@ -2,13 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getItems } from "../../api/ItemsAxios";
 
 export default function WishlistAddForm({ postWishlistHandler }) {
-  const [itemIds, setItemIds] = useState([]);
   const [data, setData] = useState({
     wishlist: {
       name: "",
       details: "",
     },
-    itemIds,
+    itemIds: [],
   });
 
   const [itemData, setItemData] = useState([]);

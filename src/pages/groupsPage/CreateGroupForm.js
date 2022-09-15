@@ -6,6 +6,7 @@ export default function CreateGroupForm({ postGroupHandler }) {
   const onChangeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
+
   return (
     <form
       onSubmit={(e) => {
@@ -28,6 +29,7 @@ export default function CreateGroupForm({ postGroupHandler }) {
           placeholder="Details"
           autoComplete="off"
         ></input>
+
         <input type="submit" value="Create" />
       </div>
     </form>

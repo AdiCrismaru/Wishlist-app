@@ -22,6 +22,15 @@ export const postGroup = async (payload) => {
   });
 };
 
+export const addGroupUsers = async (id, payload) => {
+  const payloadObj = { userIds: payload.users };
+  return await axios.post(`/groups/${id}/users`, payloadObj, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const updateGroup = (id, payload) => {
   return axios.put(`/groups/${id}`, payload, {
     headers: {

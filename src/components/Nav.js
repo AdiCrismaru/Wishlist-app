@@ -19,7 +19,10 @@ export default function Nav() {
         </Link>
 
         <Link to="/groups" className="link">
-          <li>Groups</li>
+          <li>My-Groups</li>
+        </Link>
+        <Link to="/shared-groups" className="link">
+          <li>Shared-Groups</li>
         </Link>
         <Link to="/profile" className="link">
           <li>Profile</li>

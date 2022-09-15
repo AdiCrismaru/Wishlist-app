@@ -4,16 +4,29 @@ import Moment from "moment";
 function User(props) {
   const { id, name, email, phone, dob, address } = props.object;
   const formatDate = Moment(dob).format("D MMM YYYY");
+
   return (
-    <div className="wrapper">
-      <div key={id} className="user">
-        <p> Name: {name}</p>
-        <p>Email: {email}</p>
-        <p>Phone: {phone}</p>
-        <p>Date of birth: {formatDate}</p>
-        <p>Address: {address}</p>
+    <>
+      <div key={id} className="col-sm-6 col-md-4 v my-2">
+        <div className="card shadow-sm w-100" style={{ minHeight: 150 }}>
+          <div className="card-body">
+            <h4 className="card-title text-center">{name}</h4>
+            <h6 className="card-subtitle mb-2 text-muted text-center">
+              {email}
+            </h6>
+            <h6 className="card-subtitle mb-2 text-muted text-center">
+              {phone}
+            </h6>
+            <h6 className="card-subtitle mb-2 text-muted text-center">
+              {formatDate}
+            </h6>
+            <h6 className="card-subtitle mb-2 text-muted text-center">
+              {address}
+            </h6>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

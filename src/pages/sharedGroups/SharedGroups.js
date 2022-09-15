@@ -2,7 +2,6 @@ import React from "react";
 
 export default function SharedGroups({ data }) {
   const sharedGroupsMap = data.map((group) => {
-    console.log(group);
     return (
       <div className="shared-groups-holder">
         <div className="shared-groups">
