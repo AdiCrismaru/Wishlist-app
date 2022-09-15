@@ -77,7 +77,9 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
         );
       })}
 
-      <input type="submit" value="update" />
+      <button type="submit" className="btn btn-secondary">
+        Update
+      </button>
     </form>
   );
 }

@@ -36,16 +36,18 @@ export default function ModalAddItem(props) {
   };
 
   return (
-    <>
-      <button onClick={toggleModal} className="btn-modal">
-        Add new
+    <div className="d-flex justify-content-center">
+      <button onClick={toggleModal} className="btn-secondary btn">
+        Add new item
       </button>
 
       {modal && (
-        <ModalWrapper close={toggleModal}>
-          <ItemAddForm postItemHandler={postItemHandler} />
-        </ModalWrapper>
+        <div className="z-index">
+          <ModalWrapper close={toggleModal}>
+            <ItemAddForm postItemHandler={postItemHandler} />
+          </ModalWrapper>
+        </div>
       )}
-    </>
+    </div>
   );
 }

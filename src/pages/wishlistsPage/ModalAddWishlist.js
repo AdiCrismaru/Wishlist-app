@@ -33,13 +33,17 @@ export default function ModalAddWishlist(props) {
   };
   return (
     <>
-      <button onClick={toggleModal} className="btn-modal">
-        Add new
-      </button>
+      <div className="d-flex justify-content-center">
+        <button onClick={toggleModal} className="btn btn-secondary">
+          Add wishlist
+        </button>
+      </div>
       {modal && (
-        <ModalWrapper close={toggleModal}>
-          <WishlistAddForm postWishlistHandler={postWishlistHandler} />
-        </ModalWrapper>
+        <div className="z-index">
+          <ModalWrapper close={toggleModal}>
+            <WishlistAddForm postWishlistHandler={postWishlistHandler} />
+          </ModalWrapper>
+        </div>
       )}
     </>
   );

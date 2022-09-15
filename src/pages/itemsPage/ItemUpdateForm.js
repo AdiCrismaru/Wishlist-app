@@ -65,7 +65,9 @@ export default function ItemUpdateForm({ id, item, onSubmitHandler }) {
           type="text"
           placeholder="Link"
         ></input>
-        <input type="submit" value="update" />
+        <button type="submit" className="btn btn-secondary">
+          Update
+        </button>
       </div>
     </form>
   );

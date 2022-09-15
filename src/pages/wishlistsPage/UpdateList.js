@@ -42,44 +42,53 @@ export default function UpdateList(props) {
     setModalUpdate(!modalUpdate);
   };
   return (
-    <div key={id} className="items">
-      <ul>
-        <li>N:{name}</li>
-        <li>D:{details}</li>
-
-        {items.map((item) => (
-          <div key={item.id}>
-            <li>Item: {item.name}</li>
+    <div key={id} className="col-sm-6 col-md-4 v my-2 mt-5">
+      <div
+        className="card shadow-sm w-100"
+        style={{ minHeight: 300, maxWidth: 300 }}
+      >
+        <div className="card-body">
+          <h4 className="card-title text-center ">{name}</h4>
+          <h5 className="card-subtitle mb-2  text-center">{details}</h5>
+          {items.map((item) => (
+            <div key={item.id}>
+              <h6 className="card-subtitle mb-2 text-muted text-center">
+                {item.name}
+              </h6>
+            </div>
+          ))}
+          <div className="d-flex justify-content-between">
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                deleteHandler(id);
+              }}
+            >
+              Delete
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => {
+                toggleModalUpdate();
+              }}
+            >
+              Update
+            </button>
           </div>
-        ))}
-      </ul>
-      <div className="buttons">
-        <button
-          className="btn"
-          onClick={() => {
-            deleteHandler(id);
-          }}
-        >
-          Del
-        </button>
-        <button
-          className="btn"
-          onClick={() => {
-            toggleModalUpdate();
-          }}
-        >
-          Upd
-        </button>
+        </div>
       </div>
+
       {modalUpdate && (
-        <ModalWrapper close={toggleModalUpdate}>
-          <WishlistUpdateForm
-            id={id}
-            wishlist={props.object}
-            toggleModalUpdate={toggleModalUpdate}
-            onSubmitHandler={onSubmitHandler}
-          />
-        </ModalWrapper>
+        <div className="z-index">
+          <ModalWrapper close={toggleModalUpdate}>
+            <WishlistUpdateForm
+              id={id}
+              wishlist={props.object}
+              toggleModalUpdate={toggleModalUpdate}
+              onSubmitHandler={onSubmitHandler}
+            />
+          </ModalWrapper>
+        </div>
       )}
     </div>
   );

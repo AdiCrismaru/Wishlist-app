@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { addGroupUsers, deleteGroup, updateGroup } from "../../api/GroupsAxios";
 import ModalWrapper from "../../components/ModalWrapper";
-import AddUsersForm from "./AddUsersForm";
 import UpdateGroupForm from "./UpdateGroupForm";
 
 export default function Groups({ groupsArray, setGroups }) {
   const [data, setData] = useState({});
-
   const [dataUsers, setDataUsers] = useState({ userIds: [] });
 
   const [modal, setModal] = useState(false);
-  const [modalAddUsers, setModalAddUsers] = useState(false);
 
   const onSubmitHandler = (id, payload) => {
     updateGroup(id, payload)
@@ -26,10 +23,8 @@ export default function Groups({ groupsArray, setGroups }) {
   };
 
   const postGroupUsersHandler = (id, payload) => {
-    console.log(payload);
     addGroupUsers(id, payload)
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         setDataUsers({ ...dataUsers, userIds: payload.groups.users });
       })
       .catch((err) => {
@@ -50,10 +45,6 @@ export default function Groups({ groupsArray, setGroups }) {
 
   const toggleModal = () => {
     setModal(!modal);
-  };
-
-  const toggleModalAddUsers = () => {
-    setModalAddUsers(!modalAddUsers);
   };
 
   let groupObj;
@@ -94,19 +85,10 @@ export default function Groups({ groupsArray, setGroups }) {
               >
                 Upd
               </button>
-              <button
-                className="btn"
-                onClick={() => {
-                  toggleModalAddUsers();
-                }}
-              >
-                Add Users
-              </button>
             </div>
           </div>
         );
       })}
-      {/* {users.map()} // Map users after post */}
 
       {modal && (
         <ModalWrapper close={toggleModal}>
@@ -116,12 +98,6 @@ export default function Groups({ groupsArray, setGroups }) {
             onSubmitHandler={onSubmitHandler}
             postGroupUsersHandler={postGroupUsersHandler}
           />
-        </ModalWrapper>
-      )}
-
-      {modalAddUsers && (
-        <ModalWrapper close={toggleModalAddUsers}>
-          <AddUsersForm />
         </ModalWrapper>
       )}
     </>

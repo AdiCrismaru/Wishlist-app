@@ -77,7 +77,9 @@ export default function WishlistAddForm({ postWishlistHandler }) {
         );
       })}
 
-      <input type="submit" value="Add" />
+      <button type="submit" className="btn btn-secondary">
+        Add new
+      </button>
     </form>
   );
 }

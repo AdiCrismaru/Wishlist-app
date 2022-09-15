@@ -2,8 +2,8 @@ import axios from "./axios";
 
 const token = localStorage.getItem("token");
 
-export const getWishlists = async () => {
-  return await axios.get("/wishlists", {
+export const getWishlists = async (start) => {
+  return await axios.get(`/wishlists?start=${start ? start : 0}&limit=6`, {
     headers: {
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },

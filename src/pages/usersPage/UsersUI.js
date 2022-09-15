@@ -7,6 +7,7 @@ import WrapTextContainer from "../../components/WrapTextContainer";
 
 function UsersUI() {
   const [data, setData] = useState([]);
+
   const [pageCount, setPageCount] = useState();
   const [totalCount, setTotalCount] = useState(0);
 
@@ -15,7 +16,7 @@ function UsersUI() {
       .then((res) => {
         setData(res.data.users);
         setTotalCount(res.data.totalCount);
-        setPageCount(Math.ceil(totalCount / 10));
+        setPageCount(Math.ceil(totalCount / 9));
       })
       .catch((err) => {
         console.log(err);

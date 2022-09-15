@@ -52,7 +52,9 @@ export default function ItemAddForm({ postItemHandler }) {
           type="text"
           placeholder="Link"
         ></input>
-        <input type="submit" value="Add" />
+        <button type="submit" className="btn btn-secondary">
+          Add new item
+        </button>
       </div>
     </form>
   );

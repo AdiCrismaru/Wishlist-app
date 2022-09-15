@@ -7,8 +7,10 @@ function ModalWrapper({ children, close }) {
       <div onClick={close} className="overlay"></div>
       <div className="modal-content">
         {children}
-        <div className="btns-div">
-          <button onClick={close}>Close</button>
+        <div className="d-flex justify-content-center">
+          <button onClick={close} className="btn-secondary">
+            Close
+          </button>
         </div>
       </div>
     </div>
