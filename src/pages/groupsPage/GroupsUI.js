@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getGroups, getSharedGroups } from "../../api/GroupsAxios";
 import Nav from "../../components/Nav";
+import WrapTextContainer from "../../components/WrapTextContainer";
 import Groups from "./Groups";
 import ModalAddGroup from "./ModalAddGroup";
 
@@ -22,11 +23,15 @@ export default function GroupsUI() {
     setGroups();
   }, []);
 
+  const mapGroups = data.map((group) => {
+    return <Groups data={data} group={group} setGroups={setGroups} />;
+  });
+
   return (
     <>
       <Nav />
       <ModalAddGroup setGroups={setGroups} />
-      <Groups groupsArray={data} setGroups={setGroups} />
+      <WrapTextContainer>{mapGroups}</WrapTextContainer>
     </>
   );
 }

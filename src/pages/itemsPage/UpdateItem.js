@@ -43,7 +43,7 @@ export default function UpdateItem(props) {
   };
 
   return (
-    <div key={id} className="col-sm-6 col-md-4 v my-2 mt-5">
+    <div key={id} className="col-sm-6 col-md-4 v my-3">
       <div
         className="card shadow-sm w-100"
         style={{ minHeight: 250, maxWidth: 300 }}

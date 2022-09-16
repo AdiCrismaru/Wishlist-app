@@ -33,14 +33,16 @@ export default function ModalAddGroup(props) {
     setModal(!modal);
   };
   return (
-    <div>
-      <button onClick={toggleModal} className="btn-modal">
+    <div className="d-flex justify-content-center">
+      <button onClick={toggleModal} className="btn btn-secondary">
         Add new
       </button>
       {modal && (
-        <ModalWrapper close={toggleModal}>
-          <CreateGroupForm postGroupHandler={postGroupHandler} />
-        </ModalWrapper>
+        <div className="z-index">
+          <ModalWrapper close={toggleModal}>
+            <CreateGroupForm postGroupHandler={postGroupHandler} />
+          </ModalWrapper>
+        </div>
       )}
     </div>
   );

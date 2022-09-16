@@ -24,7 +24,7 @@ function UsersUI() {
   };
   let startValue;
   const handlePageClick = (data) => {
-    startValue = data.selected * 10;
+    startValue = data.selected * 9;
     setUsersList(startValue);
   };
 
@@ -42,7 +42,7 @@ function UsersUI() {
         previousLabel={"<<"}
         nextLabel={">>"}
         breakLabel={"..."}
-        pageCount={pageCount ? pageCount : 8}
+        pageCount={pageCount ? pageCount : 9}
         marginPagesDisplayed={3}
         pageRangeDisplayed={3}
         onPageChange={handlePageClick}

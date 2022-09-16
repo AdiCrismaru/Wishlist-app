@@ -29,9 +29,15 @@ export default function CreateGroupForm({ postGroupHandler }) {
           placeholder="Details"
           autoComplete="off"
         ></input>
-
-        <input type="submit" value="Create" />
       </div>
+      <button
+        className="btn btn-secondary"
+        onClick={() => {
+          postGroupHandler(data);
+        }}
+      >
+        Add new
+      </button>
     </form>
   );
 }

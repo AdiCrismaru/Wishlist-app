@@ -42,7 +42,7 @@ export default function UpdateList(props) {
     setModalUpdate(!modalUpdate);
   };
   return (
-    <div key={id} className="col-sm-6 col-md-4 v my-2 mt-5">
+    <div key={id} className="col-sm-6 col-md-4 v my-2">
       <div
         className="card shadow-sm w-100"
         style={{ minHeight: 300, maxWidth: 300 }}

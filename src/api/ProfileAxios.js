@@ -5,7 +5,7 @@ const token = localStorage.getItem("token");
 export const getProfileInfo = async () => {
   return await axios.get("/me", {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };
