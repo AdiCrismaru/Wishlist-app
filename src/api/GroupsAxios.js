@@ -46,6 +46,12 @@ export const updateGroup = (id, payload) => {
   });
 };
 
+export const groupInvite = (id, payload) => {
+  return axios.put(`/groups/${id}/invite`, payload, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+};
+
 export const deleteGroup = (id) => {
   return axios.delete(`/groups/${id}`, {
     headers: { authorization: `Bearer ${token}` },

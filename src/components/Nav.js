@@ -27,6 +27,9 @@ export default function Nav() {
         <Link to="/profile" className="link">
           <li>Profile</li>
         </Link>
+        <Link to="/notifications" className="link">
+          <li>Notifications</li>
+        </Link>
       </ul>
     </nav>
   );

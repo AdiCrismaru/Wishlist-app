@@ -6,7 +6,7 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
   const [data, setData] = useState({
     name: wishlist.name,
     details: wishlist.details,
-    itemIds: wishlist.items.map((item) => item.id),
+    itemIds: wishlist.items.map((item) => item.item.id),
   });
 
   const [itemData, setItemData] = useState([]);

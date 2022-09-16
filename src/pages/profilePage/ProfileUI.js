@@ -8,7 +8,6 @@ import {
   faUser,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
-import { useProfile, useProfileUpdate } from "../../context/ProfileContext";
 import ModalWrapper from "../../components/ModalWrapper";
 import ProfileUpdateModal from "./ProfileUpdateModal";
 import { useNavigate } from "react-router-dom";

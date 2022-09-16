@@ -81,7 +81,6 @@ function UpdateGroupForm({
       arrCopy.push(value);
     }
     setWishlistsData({ ...wishlistsData, wishlists: arrCopy });
-    console.log(wishlistsData);
   };
 
   let usersStartValue;
@@ -167,7 +166,7 @@ function UpdateGroupForm({
                       <input
                         type="checkbox"
                         value={wishlist.id}
-                        checked={wishlistsData.wishlists.includes(wishlist.id)}
+                        hecked={wishlistsData.wishlists.includes(wishlist.id)}
                         onClick={onSelectHandlerWishlist}
                       />
                       {wishlist.name}
@@ -197,19 +196,20 @@ function UpdateGroupForm({
             activeClassName={"active"}
           />
         </div>
-      </form>
 
-      <button
-        className="btn btn-secondary"
-        type="submit"
-        onClick={() => {
-          onSubmitHandler(id, data);
-          postGroupUsersHandler(id, usersData);
-          postGroupWishlistsHandler(id, wishlistsData);
-        }}
-      >
-        Update
-      </button>
+        <button
+          className="btn btn-secondary"
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            onSubmitHandler(id, data);
+            postGroupUsersHandler(id, usersData);
+            postGroupWishlistsHandler(id, wishlistsData);
+          }}
+        >
+          Update
+        </button>
+      </form>
     </>
   );
 }

@@ -6,7 +6,6 @@ import ModalWrapper from "../../components/ModalWrapper";
 export default function UpdateList(props) {
   const object = props.object;
   const { id, name, details, items } = object;
-  console.log(object);
 
   const [modalUpdate, setModalUpdate] = useState(false);
 
@@ -42,7 +41,6 @@ export default function UpdateList(props) {
   const toggleModalUpdate = () => {
     setModalUpdate(!modalUpdate);
   };
-  console.log(items);
   return (
     <div key={id} className="col-sm-6 col-md-4 v my-2">
       <div
@@ -64,7 +62,8 @@ export default function UpdateList(props) {
           <div className="d-flex justify-content-between">
             <button
               className="btn btn-danger"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 deleteHandler(id);
               }}
             >

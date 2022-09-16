@@ -6,8 +6,6 @@ import CreateGroupForm from "./CreateGroupForm";
 export default function ModalAddGroup(props) {
   const [data, setData] = useState([]);
 
-  const [data2, setData2] = useState([]);
-
   const [modal, setModal] = useState(false);
 
   const postGroupHandler = (payload) => {

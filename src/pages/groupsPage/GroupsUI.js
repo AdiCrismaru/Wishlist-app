@@ -15,7 +15,6 @@ export default function GroupsUI() {
   const setGroups = (start) => {
     getGroups(start)
       .then((res) => {
-        console.log(res);
         setData(res.data.groups);
         setTotalCount(res.data.totalCount);
         setPageCount(Math.ceil(totalCount / 3));

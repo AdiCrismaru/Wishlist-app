@@ -31,7 +31,7 @@ export default function CreateGroupForm({ postGroupHandler }) {
       </div>
       <button
         className="btn btn-secondary"
-        onClick={() => {
+        onClick={(e) => {
           postGroupHandler(data);
         }}
       >

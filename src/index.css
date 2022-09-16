@@ -10,7 +10,8 @@ body {
 
 nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  white-space: nowrap;
   align-items: center;
   min-height: 10vh;
   background-color: #9678b6;
@@ -24,6 +25,7 @@ nav > img {
   width: 40%;
   display: flex;
   justify-content: space-around;
+  gap: 60px;
   align-items: center;
   list-style: none;
 }
@@ -35,13 +37,7 @@ nav > img {
 .red {
   background-color: red;
 }
-#dropdown {
-  font-family: "Nunito", sans-serif;
-  font-size: 22px;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-  margin-bottom: 10px;
-}
+
 .wrapper {
   justify-content: center;
   display: flex;
