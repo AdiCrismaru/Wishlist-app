@@ -14,7 +14,7 @@ function WishlistUI() {
   const setWishlist = (start) => {
     getWishlists(start)
       .then((res) => {
-        setData(res.data.wishlists.reverse());
+        setData(res.data.wishlists);
         setTotalCount(res.data.totalCount);
         setPageCount(Math.ceil(totalCount / 6));
       })

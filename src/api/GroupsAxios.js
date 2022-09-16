@@ -2,8 +2,8 @@ import axios from "./axios";
 
 const token = localStorage.getItem("token");
 
-export const getGroups = async () => {
-  return await axios.get("/groups", {
+export const getGroups = async (start) => {
+  return await axios.get(`/groups?start=${start ? start : 0}&limit=3`, {
     headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };

@@ -93,6 +93,15 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
             </div>
           );
         })}
+        <button
+          type="submit"
+          className="btn btn-secondary"
+          onClick={() => {
+            onSubmitHandler(id, data);
+          }}
+        >
+          Update
+        </button>
       </form>
       <ReactPaginate
         previousLabel={"<<"}
@@ -113,15 +122,6 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
         breakLinkClassName={"page-link"}
         activeClassName={"active"}
       />
-      <button
-        type="submit"
-        className="btn btn-secondary"
-        onClick={() => {
-          onSubmitHandler(id, data);
-        }}
-      >
-        Update
-      </button>
     </>
   );
 }

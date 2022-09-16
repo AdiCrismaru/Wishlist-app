@@ -6,6 +6,7 @@ import ModalWrapper from "../../components/ModalWrapper";
 export default function UpdateList(props) {
   const object = props.object;
   const { id, name, details, items } = object;
+  console.log(object);
 
   const [modalUpdate, setModalUpdate] = useState(false);
 
@@ -41,6 +42,7 @@ export default function UpdateList(props) {
   const toggleModalUpdate = () => {
     setModalUpdate(!modalUpdate);
   };
+  console.log(items);
   return (
     <div key={id} className="col-sm-6 col-md-4 v my-2">
       <div
@@ -50,13 +52,15 @@ export default function UpdateList(props) {
         <div className="card-body">
           <h4 className="card-title text-center ">{name}</h4>
           <h5 className="card-subtitle mb-2  text-center">{details}</h5>
-          {items.map((item) => (
-            <div key={item.id}>
-              <h6 className="card-subtitle mb-2 text-muted text-center">
-                {item.name}
-              </h6>
-            </div>
-          ))}
+          {items.map((item) => {
+            return (
+              <div key={item.item.id}>
+                <h6 className="card-subtitle mb-2 text-muted text-center">
+                  {item.item.name}
+                </h6>
+              </div>
+            );
+          })}
           <div className="d-flex justify-content-between">
             <button
               className="btn btn-danger"

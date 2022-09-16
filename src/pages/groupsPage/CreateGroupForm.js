@@ -11,7 +11,6 @@ export default function CreateGroupForm({ postGroupHandler }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        postGroupHandler(data);
       }}
     >
       <div className="user-input">
