@@ -35,7 +35,6 @@ function UpdateGroupForm({
   const displayUsers = (start) => {
     getUsers(start)
       .then((res) => {
-        console.log(res);
         setUsersRequest(res.data.users);
         setUsersTotalCount(res.data.totalCount);
         setUsersPageCount(Math.ceil(usersTotalCount / 10));
@@ -96,8 +95,6 @@ function UpdateGroupForm({
     wishlistsStartValue = click.selected * 6;
     displayWishlists(wishlistsStartValue);
   };
-
-  console.log(group);
 
   return (
     <>
