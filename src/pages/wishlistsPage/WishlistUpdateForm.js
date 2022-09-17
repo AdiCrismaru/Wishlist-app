@@ -60,7 +60,6 @@ export default function WishlistUpdateForm({ id, wishlist, onSubmitHandler }) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmitHandler(id, data);
         }}
       >
         <input

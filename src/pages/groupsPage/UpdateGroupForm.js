@@ -126,9 +126,9 @@ function UpdateGroupForm({
                     <label>
                       <input
                         type="checkbox"
+                        onChange={onSelectHandlerUser}
                         value={user.id}
                         checked={usersData.users.includes(user.id)}
-                        onClick={onSelectHandlerUser}
                       />
                       {user.name}
                     </label>
@@ -166,8 +166,8 @@ function UpdateGroupForm({
                       <input
                         type="checkbox"
                         value={wishlist.id}
-                        hecked={wishlistsData.wishlists.includes(wishlist.id)}
-                        onClick={onSelectHandlerWishlist}
+                        checked={wishlistsData.wishlists.includes(wishlist.id)}
+                        onChange={onSelectHandlerWishlist}
                       />
                       {wishlist.name}
                     </label>

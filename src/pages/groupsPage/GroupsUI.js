@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { getGroups, getSharedGroups } from "../../api/GroupsAxios";
+import { getGroups } from "../../api/GroupsAxios";
 import Nav from "../../components/Nav";
 import WrapTextContainer from "../../components/WrapTextContainer";
 import Groups from "./Groups";

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getSharedGroups } from "../../api/GroupsAxios";
 import Nav from "../../components/Nav";
 import SharedGroups from "./SharedGroups";
+import WrapTextContainer from "../../components/WrapTextContainer";
 
 function SharedGroupsUI() {
   const [sharedGroupData, setSharedGroupData] = useState([]);
@@ -22,7 +23,9 @@ function SharedGroupsUI() {
   return (
     <>
       <Nav />
-      <SharedGroups data={sharedGroupData} />
+      <WrapTextContainer>
+        <SharedGroups data={sharedGroupData} />
+      </WrapTextContainer>
     </>
   );
 }

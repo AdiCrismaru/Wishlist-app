@@ -25,7 +25,7 @@ export const updateWishlists = (id, payload) => {
     itemIds: payload.itemIds,
   };
   return axios.put(`/wishlists/${id}`, obj, {
-    headers: { authorization: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };
 

@@ -12,6 +12,10 @@ function ItemsUI() {
   const [pageCount, setPageCount] = useState();
   const [totalCount, setTotalCount] = useState(0);
 
+  useEffect(() => {
+    setItemsList();
+  }, []);
+
   const setItemsList = (start) => {
     getItems(start)
       .then((res) => {
@@ -29,10 +33,6 @@ function ItemsUI() {
     startValue = click.selected * 6;
     setItemsList(startValue);
   };
-
-  useEffect(() => {
-    setItemsList();
-  }, []);
 
   const mapData = data.map((object) => {
     return (

@@ -36,7 +36,6 @@ export function LoginProvider({ children }) {
       }
 
       setErrMsg(response.data.errors);
-      console.log(response);
 
       if (response.data.token) {
         navigate("/wishlist");

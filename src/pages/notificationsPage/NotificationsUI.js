@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { getNotifications } from "../../api/NotificationsAxios";
 import Nav from "../../components/Nav";
+import WrapTextContainer from "../../components/WrapTextContainer";
 
 function NotificationsUI() {
   const [data, setData] = useState([]);
 
-  const setNotifications = () => {
-    getNotifications()
+  const setNotifications = (start) => {
+    getNotifications(start)
       .then((res) => {
         setData(res.data.notifications);
       })
@@ -18,10 +20,11 @@ function NotificationsUI() {
   useEffect(() => {
     setNotifications();
   }, []);
+
   return (
     <>
       <Nav />
-      <div className="d-flex justify-content-center">
+      <WrapTextContainer>
         {data.map((notification) => {
           return (
             <div
@@ -44,7 +47,7 @@ function NotificationsUI() {
             </div>
           );
         })}
-      </div>
+      </WrapTextContainer>
     </>
   );
 }

@@ -11,6 +11,8 @@ function UsersUI() {
   const [pageCount, setPageCount] = useState();
   const [totalCount, setTotalCount] = useState(0);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const setUsersList = (start) => {
     getUsers(start)
       .then((res) => {
@@ -32,12 +34,37 @@ function UsersUI() {
     setUsersList();
   }, []);
 
-  const mapUsers = data.map((object) => {
-    return <User object={object} data={data} />;
-  });
+  // const mapUsers = data.map((object) => {
+  //   return <User object={object} data={data} />;
+  // });
   return (
     <>
       <Nav />
+      {/* <WrapTextContainer>{mapUsers}</WrapTextContainer> */}
+      <div className="d-flex justify-content-center">
+        <input
+          type="text"
+          placeholder="Search.."
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+          }}
+        ></input>
+      </div>
+      <WrapTextContainer>
+        {data
+          .filter((user) => {
+            if (searchTerm == "") {
+              return user;
+            } else if (
+              user.name.toLowerCase().includes(searchTerm.toLocaleLowerCase())
+            ) {
+              return user;
+            }
+          })
+          .map((object) => {
+            return <User object={object} data={data} />;
+          })}
+      </WrapTextContainer>
       <ReactPaginate
         previousLabel={"<<"}
         nextLabel={">>"}
@@ -57,7 +84,6 @@ function UsersUI() {
         breakLinkClassName={"page-link"}
         activeClassName={"active"}
       />
-      <WrapTextContainer>{mapUsers}</WrapTextContainer>
     </>
   );
 }
