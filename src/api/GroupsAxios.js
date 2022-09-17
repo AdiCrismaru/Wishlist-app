@@ -8,14 +8,6 @@ export const getGroups = async (start) => {
   });
 };
 
-export const getSharedGroups = async () => {
-  return await axios.get("/groups/shared", {
-    headers: {
-      authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-};
-
 export const postGroup = async (payload) => {
   return await axios.post("/groups", payload, {
     headers: { authorization: `Bearer ${token}` },

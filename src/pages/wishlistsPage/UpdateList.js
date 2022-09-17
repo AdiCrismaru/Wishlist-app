@@ -4,8 +4,7 @@ import { deleteWishlist, updateWishlists } from "../../api/WishlistAxios";
 import ModalWrapper from "../../components/ModalWrapper";
 
 export default function UpdateList(props) {
-  const object = props.object;
-  const { id, name, details, items } = object;
+  const { id, name, details, items } = props.object;
 
   const [modalUpdate, setModalUpdate] = useState(false);
 
@@ -21,7 +20,7 @@ export default function UpdateList(props) {
         });
 
         props.setWishlist();
-        toggleModalUpdate(id);
+        toggleModalUpdate();
       })
       .catch((err) => {
         console.log(err);
@@ -42,12 +41,12 @@ export default function UpdateList(props) {
     setModalUpdate(!modalUpdate);
   };
   return (
-    <div key={id} className="col-sm-6 col-md-4 v my-2">
+    <div className="col-sm-6 col-md-4 v my-2">
       <div
         className="card shadow-sm w-100"
         style={{ minHeight: 300, maxWidth: 300 }}
       >
-        <div className="card-body">
+        <div key={id} className="card-body">
           <h4 className="card-title text-center ">{name}</h4>
           <h5 className="card-subtitle mb-2  text-center">{details}</h5>
           {items.map((item) => {
