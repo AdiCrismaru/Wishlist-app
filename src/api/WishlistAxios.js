@@ -34,3 +34,10 @@ export const deleteWishlist = (id) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const buyItem = (id, itemId, data) => {
+  const payload = { buyersIds: data.buyersIds };
+  return axios.put(`/wishlists/${id}/items/${itemId}/buy`, payload, {
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
+  });
+};

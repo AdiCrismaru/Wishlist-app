@@ -5,6 +5,7 @@ import Nav from "../../components/Nav";
 import WrapTextContainer from "../../components/WrapTextContainer";
 import Groups from "./Groups";
 import ModalAddGroup from "./ModalAddGroup";
+import { PuffLoader } from "react-spinners";
 
 export default function GroupsUI() {
   const [data, setData] = useState([]);
@@ -12,12 +13,15 @@ export default function GroupsUI() {
   const [pageCount, setPageCount] = useState();
   const [totalCount, setTotalCount] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   const setGroups = (start) => {
     getGroups(start)
       .then((res) => {
         setData(res.data.groups);
         setTotalCount(res.data.totalCount);
         setPageCount(Math.ceil(totalCount / 3));
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -40,28 +44,37 @@ export default function GroupsUI() {
 
   return (
     <>
-      <Nav />
-      <ModalAddGroup setGroups={setGroups} />
-      <WrapTextContainer>{mapGroups}</WrapTextContainer>
-      <ReactPaginate
-        previousLabel={"<<"}
-        nextLabel={">>"}
-        breakLabel={"..."}
-        pageCount={pageCount ? pageCount : 2}
-        marginPagesDisplayed={3}
-        pageRangeDisplayed={3}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination justify-content-center"}
-        pageClassName={"page-item"}
-        pageLinkClassName={"page-link"}
-        previousClassName={"page-item"}
-        previousLinkClassName={"page-link"}
-        nextClassName={"page-item"}
-        nextLinkClassName={"page-link"}
-        breakClassName={"page-item"}
-        breakLinkClassName={"page-link"}
-        activeClassName={"active"}
-      />
+      {!loading && <ModalAddGroup setGroups={setGroups} />}
+
+      <div className="d-flex justify-content-center">
+        {loading ? (
+          <PuffLoader />
+        ) : (
+          <WrapTextContainer>{mapGroups}</WrapTextContainer>
+        )}
+      </div>
+
+      {!loading && (
+        <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          breakLabel={"..."}
+          pageCount={pageCount ? pageCount : 2}
+          marginPagesDisplayed={3}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
+      )}
     </>
   );
 }

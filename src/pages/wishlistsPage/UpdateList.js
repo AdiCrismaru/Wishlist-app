@@ -41,7 +41,7 @@ export default function UpdateList(props) {
     setModalUpdate(!modalUpdate);
   };
   return (
-    <div className="col-sm-6 col-md-4 v my-2">
+    <div key={id} className="col-sm-6 col-md-4 v my-2">
       <div
         className="card shadow-sm w-100"
         style={{ minHeight: 300, maxWidth: 300 }}
@@ -86,7 +86,6 @@ export default function UpdateList(props) {
             <WishlistUpdateForm
               id={id}
               wishlist={props.object}
-              toggleModalUpdate={toggleModalUpdate}
               onSubmitHandler={onSubmitHandler}
             />
           </ModalWrapper>

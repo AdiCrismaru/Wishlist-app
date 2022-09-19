@@ -1,24 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Nav from "../../components/Nav";
-import Moment from "moment";
-import "./Profile.css";
-import {
-  faUpRightFromSquare,
-  faUser,
-  faUserPen,
-} from "@fortawesome/free-solid-svg-icons";
 import ModalWrapper from "../../components/ModalWrapper";
 import ProfileUpdateModal from "./ProfileUpdateModal";
-import { useNavigate } from "react-router-dom";
 import { getProfileInfo, putProfileInfo } from "../../api/ProfileAxios";
+import ProfileData from "./ProfileData";
 
 function ProfileUI() {
   const [data, setData] = useState({});
 
   const [modal, setModal] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getProfileInfo()
@@ -30,15 +19,14 @@ function ProfileUI() {
 
   const onSubmitHandler = (payload) => {
     putProfileInfo(payload)
-      .then((res) => {
-        console.log(res);
-        toggleModal();
+      .then(() => {
         setData({
           ...data,
           name: payload.name,
           phone: payload.phone,
           dob: payload.dob,
         });
+        toggleModal();
       })
       .catch((err) => {
         console.log(err);
@@ -48,57 +36,17 @@ function ProfileUI() {
   const toggleModal = () => {
     setModal(!modal);
   };
-  const logoutHandle = () => {
-    navigate("/");
-    localStorage.clear();
-  };
-  const formatDate = Moment(data.dob).format("Do-MMM-YYYY");
-  return (
-    <div>
-      <Nav />
 
-      <div className="user-container">
-        <div className="top-div">
-          <FontAwesomeIcon icon={faUser} size="8x" />
-        </div>
-        <hr />
-        <div className="user-info">
-          <a href="/" onClick={logoutHandle}>
-            <FontAwesomeIcon icon={faUpRightFromSquare} />
-            Logout
-          </a>
-          <span className="edit" onClick={toggleModal}>
-            <FontAwesomeIcon icon={faUserPen} /> Edit
-          </span>
-        </div>
-        <hr />
-        <div className="user-info">
-          <p>Name:</p>
-          <p>{data.name}</p>
-        </div>
-        <hr />
-        <div className="user-info">
-          <p>Email:</p>
-          <p>{data.email}</p>
-        </div>
-        <hr />
-        <div className="user-info">
-          <p>Phone:</p>
-          <span>{data.phone}</span>
-        </div>
-        <hr />
-        <div className="user-info">
-          <p>Date of birth:</p>
-          <p>{formatDate}</p>
-        </div>
-      </div>
+  return (
+    <>
+      <ProfileData data={data} toggleModal={toggleModal} />
 
       {modal && (
         <ModalWrapper close={toggleModal}>
           <ProfileUpdateModal user={data} onSubmitHandler={onSubmitHandler} />
         </ModalWrapper>
       )}
-    </div>
+    </>
   );
 }
 
