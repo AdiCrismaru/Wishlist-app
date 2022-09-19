@@ -1,8 +1,8 @@
-import { React, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import OutlinedButton from "../../components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRegister, useRegisterUpdate } from "../../context/RegisterContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import OutlinedButton from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import { React, useRef } from "react";
 import "./Login&Register.css";
 import {
   faCheck,
@@ -160,7 +160,6 @@ export default function RegisterUI() {
             navigate("/");
           }}
         />
-
         <OutlinedButton text="Register" click={handleSubmit} />
       </div>
     </section>

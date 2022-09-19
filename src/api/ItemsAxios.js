@@ -1,5 +1,4 @@
 import axios from "./axios";
-const token = localStorage.getItem("token");
 
 export const getItems = async (start) => {
   return await axios.get(`/items?start=${start ? start : 0}&limit=6`, {
@@ -11,20 +10,20 @@ export const getItems = async (start) => {
 
 export const postItems = async (payload) => {
   return await axios.post("/items", payload, {
-    headers: { authorization: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };
 
 export const updateItems = (id, payload) => {
   return axios.put(`/items/${id}`, payload, {
-    headers: { authorization: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };
 
 export const deleteItems = (id) => {
   return axios.delete(`/items/${id}`, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 };

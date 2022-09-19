@@ -1,7 +1,7 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import Moment from "moment";
+import React from "react";
 import "./Profile.css";
 import {
   faUpRightFromSquare,

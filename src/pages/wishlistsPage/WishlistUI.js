@@ -1,10 +1,10 @@
 import WrapTextContainer from "../../components/WrapTextContainer";
 import { getWishlists } from "../../api/WishlistAxios";
-import React, { useState, useEffect } from "react";
-import ModalAddWishlist from "./ModalAddWishlist";
-import ReactPaginate from "react-paginate";
-import UpdateList from "./UpdateList";
 import PuffLoader from "react-spinners/PuffLoader";
+import React, { useState, useEffect } from "react";
+import AddWishlistModal from "./AddWishlistModal";
+import ReactPaginate from "react-paginate";
+import Wishlists from "./Wishlists";
 
 function WishlistUI() {
   const [data, setData] = useState([]);
@@ -13,6 +13,10 @@ function WishlistUI() {
   const [totalCount, setTotalCount] = useState(0);
 
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setWishlist();
+  }, []);
 
   const setWishlist = (start) => {
     getWishlists(start)
@@ -33,17 +37,13 @@ function WishlistUI() {
     setWishlist(startValue);
   };
 
-  useEffect(() => {
-    setWishlist();
-  }, []);
-
   const wishlistsMap = data.map((object) => {
-    return <UpdateList data={data} object={object} setWishlist={setWishlist} />;
+    return <Wishlists data={data} object={object} setWishlist={setWishlist} />;
   });
 
   return (
     <>
-      {!loading && <ModalAddWishlist setWishlist={setWishlist} />}
+      {!loading && <AddWishlistModal setWishlist={setWishlist} />}
 
       <div className="d-flex justify-content-center">
         {loading ? (
@@ -70,7 +70,7 @@ function WishlistUI() {
           nextLinkClassName={"page-link"}
           breakClassName={"page-item"}
           breakLinkClassName={"page-link"}
-          activeClassName={"active"}
+          // activeClassName={"active"}
         />
       )}
     </>

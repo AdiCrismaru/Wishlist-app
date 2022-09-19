@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import ModalWrapper from "../../components/ModalWrapper";
-import ItemUpdateForm from "./ItemUpdateForm";
 import { updateItems, deleteItems } from "../../api/ItemsAxios";
+import UpdateItemForm from "./UpdateItemForm";
 
-export default function UpdateItem(props) {
+export default function Items(props) {
   const { id, name, details, size, maker, model, link } = props.object;
 
   const [modalPut, setModalPut] = useState(false);
@@ -94,7 +94,7 @@ export default function UpdateItem(props) {
               setModalPut(false);
             }}
           >
-            <ItemUpdateForm
+            <UpdateItemForm
               id={id}
               item={props.object}
               toggleModalUpdate={toggleModalUpdate}

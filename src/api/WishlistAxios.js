@@ -1,7 +1,5 @@
 import axios from "./axios";
 
-const token = localStorage.getItem("token");
-
 export const getWishlists = async (start) => {
   return await axios.get(`/wishlists?start=${start ? start : 0}&limit=6`, {
     headers: {
@@ -12,7 +10,7 @@ export const getWishlists = async (start) => {
 
 export const postWishlist = async (payload) => {
   return await axios.post("/wishlists", payload, {
-    headers: { authorization: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };
 
@@ -31,12 +29,12 @@ export const updateWishlists = (id, payload) => {
 
 export const deleteWishlist = (id) => {
   return axios.delete(`/wishlists/${id}`, {
-    headers: { authorization: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };
 
 export const buyItem = (id, itemId, data) => {
-  const payload = { buyersIds: data.buyersIds };
+  const payload = { buyersIds: data };
   return axios.put(`/wishlists/${id}/items/${itemId}/buy`, payload, {
     headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });

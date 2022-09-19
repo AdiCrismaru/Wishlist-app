@@ -2,7 +2,6 @@ import WrapTextContainer from "../../components/WrapTextContainer";
 import { getSharedGroups } from "../../api/SharedGroupsAxios";
 import React, { useEffect, useState } from "react";
 import PuffLoader from "react-spinners/PuffLoader";
-import { buyItem } from "../../api/WishlistAxios";
 import ReactPaginate from "react-paginate";
 import SharedGroups from "./SharedGroups";
 
@@ -37,18 +36,8 @@ function SharedGroupsUI() {
     setSharedGroups(startValue);
   };
 
-  const handleBuy = (id, itemId, payload) => {
-    buyItem(id, itemId, payload).then((res) => {});
-  };
-
   const sharedGroupsMap = sharedGroupData.map((group) => {
-    return (
-      <SharedGroups
-        group={group}
-        data={sharedGroupData}
-        handleBuy={handleBuy}
-      />
-    );
+    return <SharedGroups group={group} data={sharedGroupData} />;
   });
 
   return (
@@ -79,7 +68,7 @@ function SharedGroupsUI() {
           nextLinkClassName={"page-link"}
           breakClassName={"page-item"}
           breakLinkClassName={"page-link"}
-          activeClassName={"active"}
+          // activeClassName={"active"}
         />
       )}
     </>

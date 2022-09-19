@@ -3,7 +3,7 @@ import WishlistAddForm from "./WishlistAddForm";
 import ModalWrapper from "../../components/ModalWrapper";
 import { postWishlist } from "../../api/WishlistAxios";
 
-export default function ModalAddWishlist(props) {
+export default function AddWishlistModal(props) {
   const [data, setData] = useState({});
 
   const [modal, setModal] = useState(false);

@@ -1,3 +1,5 @@
+import ModalWrapper from "../../components/ModalWrapper";
+import UpdateGroupForm from "./UpdateGroupForm";
 import React, { useState } from "react";
 import {
   addGroupUsers,
@@ -5,8 +7,6 @@ import {
   deleteGroup,
   updateGroup,
 } from "../../api/GroupsAxios";
-import ModalWrapper from "../../components/ModalWrapper";
-import UpdateGroupForm from "./UpdateGroupForm";
 
 export default function Groups(props) {
   const group = props.group;
@@ -121,7 +121,7 @@ export default function Groups(props) {
                   toggleModal();
                 }}
               >
-                Update
+                Add
               </button>
             </div>
           </div>

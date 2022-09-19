@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import WishlistUpdateForm from "./WishlistUpdateForm";
+import UpdateWishlistForm from "./UpdateWishlistForm";
 import { deleteWishlist, updateWishlists } from "../../api/WishlistAxios";
 import ModalWrapper from "../../components/ModalWrapper";
 
-export default function UpdateList(props) {
+export default function Wishlists(props) {
   const { id, name, details, items } = props.object;
 
   const [modalUpdate, setModalUpdate] = useState(false);
@@ -83,7 +83,7 @@ export default function UpdateList(props) {
       {modalUpdate && (
         <div className="z-index">
           <ModalWrapper close={toggleModalUpdate}>
-            <WishlistUpdateForm
+            <UpdateWishlistForm
               id={id}
               wishlist={props.object}
               onSubmitHandler={onSubmitHandler}

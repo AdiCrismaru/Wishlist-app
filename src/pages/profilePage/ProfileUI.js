@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import ModalWrapper from "../../components/ModalWrapper";
-import ProfileUpdateModal from "./ProfileUpdateModal";
 import { getProfileInfo, putProfileInfo } from "../../api/ProfileAxios";
+import ModalWrapper from "../../components/ModalWrapper";
+import UpdateProfileModal from "./UpdateProfileModal";
+import React, { useEffect, useState } from "react";
 import ProfileData from "./ProfileData";
 
 function ProfileUI() {
@@ -43,7 +43,7 @@ function ProfileUI() {
 
       {modal && (
         <ModalWrapper close={toggleModal}>
-          <ProfileUpdateModal user={data} onSubmitHandler={onSubmitHandler} />
+          <UpdateProfileModal user={data} onSubmitHandler={onSubmitHandler} />
         </ModalWrapper>
       )}
     </>

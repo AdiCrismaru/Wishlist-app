@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { PrivateRoutes, IsLoggedIn } from "./routes/PrivateRoutes";
 import NotificationsRoute from "./routes/NotificationsRoute";
 import SharedGroupsRoute from "./routes/SharedGroupsRoute";
+import { PrivateRoutes } from "./routes/PrivateRoutes";
 import RegisterRoute from "./routes/RegisterRoute";
 import WishlistRoute from "./routes/WishlistRoute";
 import ProfileRoute from "./routes/ProfileRoute";
@@ -24,10 +24,10 @@ function App() {
           <Route path="/items" element={<ItemsRoute />} />
           <Route path="/users" element={<UsersRoute />} />
         </Route>
-        <Route element={<IsLoggedIn />}>
-          <Route path="/register" element={<RegisterRoute />} />
-          <Route path="/" element={<LoginRoute />} />
-        </Route>
+        {/* <Route element={<IsLoggedIn />}> */}
+        <Route path="/register" element={<RegisterRoute />} />
+        <Route path="/" element={<LoginRoute />} />
+        {/* </Route> */}
         <Route path="*" element={<ErrorRoute />} />
       </Routes>
     </Router>

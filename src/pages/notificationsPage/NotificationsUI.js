@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getNotifications } from "../../api/NotificationsAxios";
 import WrapTextContainer from "../../components/WrapTextContainer";
+import { getNotifications } from "../../api/NotificationsAxios";
+import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
 
 function NotificationsUI() {

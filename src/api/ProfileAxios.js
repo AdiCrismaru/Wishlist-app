@@ -1,7 +1,5 @@
 import axios from "./axios";
 
-const token = localStorage.getItem("token");
-
 export const getProfileInfo = async () => {
   return await axios.get("/me", {
     headers: {
@@ -12,6 +10,6 @@ export const getProfileInfo = async () => {
 
 export const putProfileInfo = (payload) => {
   return axios.put("/me", payload, {
-    headers: { authorization: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
   });
 };

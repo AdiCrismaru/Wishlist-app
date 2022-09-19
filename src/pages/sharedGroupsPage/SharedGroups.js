@@ -1,13 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { getWishlists } from "../../api/WishlistAxios";
+import { buyItem, getWishlists } from "../../api/WishlistAxios";
 import ModalWrapper from "../../components/ModalWrapper";
+import React, { useEffect, useState } from "react";
 import AddBuyersForm from "./AddBuyersForm";
 
-export default function SharedGroups({ data, group, handleBuy }) {
+export default function SharedGroups({ group }) {
+  const [wishlistData, setWishlistData] = useState([]);
+
+  const [wishlistId, setWishlistId] = useState();
+  const [itemId, setItemId] = useState();
+
   const [modal, setModal] = useState(false);
 
-  const toggleModal = () => {
+  useEffect(() => {
+    listWishlist();
+  }, []);
+
+  const listWishlist = () => {
+    getWishlists()
+      .then((res) => {
+        setWishlistData(res.data.wishlists);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleBuy = (id, itemId, buyersIds) => {
+    console.log(id, itemId, buyersIds);
+    buyItem(id, itemId, buyersIds).then((res) => {
+      if (res.status === 200) {
+        setWishlistData({ ...wishlistData, buyersIds: buyersIds });
+        setModal(false);
+      }
+    });
+  };
+
+  const toggleModal = (wishlistId, itemId) => {
     setModal(!modal);
+    setWishlistId(wishlistId);
+    setItemId(itemId);
   };
 
   return (
@@ -53,7 +82,7 @@ export default function SharedGroups({ data, group, handleBuy }) {
                             href=""
                             onClick={(e) => {
                               e.preventDefault();
-                              toggleModal();
+                              toggleModal(wishlist.id, item.id);
                             }}
                           >
                             Buy
@@ -77,7 +106,13 @@ export default function SharedGroups({ data, group, handleBuy }) {
       {modal && (
         <div className="z-index">
           <ModalWrapper close={toggleModal}>
-            <AddBuyersForm handleBuy={handleBuy} />
+            <AddBuyersForm
+              handleBuy={handleBuy}
+              wishlistId={wishlistId}
+              itemId={itemId}
+              group={group}
+              wishlistData={wishlistData}
+            />
           </ModalWrapper>
         </div>
       )}

@@ -1,6 +1,7 @@
+import { getItems } from "../../api/ItemsAxios";
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { getItems } from "../../api/ItemsAxios";
+import { PuffLoader } from "react-spinners";
 
 export default function WishlistAddForm({ postWishlistHandler }) {
   const [data, setData] = useState({
@@ -16,6 +17,8 @@ export default function WishlistAddForm({ postWishlistHandler }) {
   const [pageCount, setPageCount] = useState();
   const [totalCount, setTotalCount] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     displayItems();
   }, []);
@@ -24,13 +27,14 @@ export default function WishlistAddForm({ postWishlistHandler }) {
     getItems(start).then((res) => {
       setItemData(res.data.items);
       setTotalCount(res.data.totalCount);
-      setPageCount(Math.ceil(totalCount / 10));
+      setPageCount(Math.ceil(totalCount / 6));
+      setLoading(false);
     });
   };
 
   let startValue;
   const handlePageClick = (click) => {
-    startValue = click.selected * 10;
+    startValue = click.selected * 6;
     displayItems(startValue);
   };
 
@@ -57,6 +61,22 @@ export default function WishlistAddForm({ postWishlistHandler }) {
     setData({ ...data, itemIds: listCopy });
   };
 
+  const mapItems = itemData.map((item) => {
+    return (
+      <div key={item.id}>
+        <label>
+          <input
+            type="checkbox"
+            value={item.id}
+            checked={data.itemIds.includes(item.id)}
+            onClick={onSelectHandler}
+          />
+          {item.name}
+        </label>
+      </div>
+    );
+  });
+
   return (
     <>
       <form
@@ -78,41 +98,51 @@ export default function WishlistAddForm({ postWishlistHandler }) {
           type="text"
           placeholder="Details"
         ></input>
-        {itemData.map((item) => {
-          return (
-            <div key={item.id}>
-              <label>
-                <input
-                  type="checkbox"
-                  value={item.id}
-                  checked={data.itemIds.includes(item.id)}
-                  onClick={onSelectHandler}
-                />
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
+
+        <div className="d-flex justify-content-center">
+          {loading ? (
+            <PuffLoader />
+          ) : (
+            itemData.map((item) => {
+              return (
+                <div key={item.id}>
+                  <label>
+                    <input
+                      className="m-3"
+                      type="checkbox"
+                      value={item.id}
+                      checked={data.itemIds.includes(item.id)}
+                      onClick={onSelectHandler}
+                    />
+                    {item.name}
+                  </label>
+                </div>
+              );
+            })
+          )}
+        </div>
       </form>
-      <ReactPaginate
-        previousLabel={"<<"}
-        nextLabel={">>"}
-        breakLabel={"..."}
-        pageCount={pageCount ? pageCount : 2}
-        marginPagesDisplayed={3}
-        pageRangeDisplayed={3}
-        onPageChange={handlePageClick}
-        containerClassName={"pagination justify-content-center"}
-        pageClassName={"page-item"}
-        pageLinkClassName={"page-link"}
-        previousClassName={"page-item"}
-        previousLinkClassName={"page-link"}
-        nextClassName={"page-item"}
-        nextLinkClassName={"page-link"}
-        breakClassName={"page-item"}
-        breakLinkClassName={"page-link"}
-        activeClassName={"active"}
-      />
+      {!loading && (
+        <ReactPaginate
+          previousLabel={"<<"}
+          nextLabel={">>"}
+          breakLabel={"..."}
+          pageCount={pageCount ? pageCount : 2}
+          marginPagesDisplayed={3}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
+      )}
       <button
         type="submit"
         className="btn btn-secondary"

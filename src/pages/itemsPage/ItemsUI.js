@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import UpdateItem from "./UpdateItem";
-import "./Items.css";
-import { getItems } from "../../api/ItemsAxios";
-import ModalAddItem from "./ModalAddItem";
-import ReactPaginate from "react-paginate";
 import WrapTextContainer from "../../components/WrapTextContainer";
+import React, { useEffect, useState } from "react";
+import { getItems } from "../../api/ItemsAxios";
 import { PuffLoader } from "react-spinners";
+import ReactPaginate from "react-paginate";
+import AddItemModal from "./AddItemModal";
+import Items from "./Items";
 
 function ItemsUI() {
   const [data, setData] = useState([]);
@@ -39,14 +38,12 @@ function ItemsUI() {
   };
 
   const mapData = data.map((object) => {
-    return (
-      <UpdateItem data={data} object={object} setItemsList={setItemsList} />
-    );
+    return <Items data={data} object={object} setItemsList={setItemsList} />;
   });
 
   return (
     <>
-      {!loading && <ModalAddItem setItemsList={setItemsList} />}
+      {!loading && <AddItemModal setItemsList={setItemsList} />}
 
       <div className="d-flex justify-content-center">
         {loading ? (
@@ -74,7 +71,7 @@ function ItemsUI() {
           nextLinkClassName={"page-link"}
           breakClassName={"page-item"}
           breakLinkClassName={"page-link"}
-          activeClassName={"active"}
+          // activeClassName={"active"}
         />
       )}
     </>

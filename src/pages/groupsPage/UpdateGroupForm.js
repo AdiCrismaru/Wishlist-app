@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { getUsers } from "../../api/UsersAxios";
-import ReactPaginate from "react-paginate";
 import WrapTextContainer from "../../components/WrapTextContainer";
 import { getWishlists } from "../../api/WishlistAxios";
+import React, { useState, useEffect } from "react";
+import { getUsers } from "../../api/UsersAxios";
+import { PuffLoader } from "react-spinners";
+import ReactPaginate from "react-paginate";
 
 function UpdateGroupForm({
   id,
@@ -19,18 +20,20 @@ function UpdateGroupForm({
   const [usersData, setUsersData] = useState({
     users: group.users.map((user) => user.id),
   });
+  const [wishlistsData, setWishlistsData] = useState({
+    wishlists: group.wishlists.map((list) => list.id),
+  });
+
   const [usersRequest, setUsersRequest] = useState([]);
+  const [wishlistsRequest, setWishlistsRequest] = useState([]);
 
   const [usersPageCount, setUsersPageCount] = useState();
   const [usersTotalCount, setUsersTotalCount] = useState(0);
 
-  const [wishlistsData, setWishlistsData] = useState({
-    wishlists: group.wishlists.map((list) => list.id),
-  });
-  const [wishlistsRequest, setWishlistsRequest] = useState([]);
-
   const [wishlistsPageCount, setWishlistsPageCount] = useState();
   const [wishlistsTotalCount, setWishlistsTotalCount] = useState(0);
+
+  const [loading, setLoading] = useState(true);
 
   const displayUsers = (start) => {
     getUsers(start)
@@ -38,6 +41,7 @@ function UpdateGroupForm({
         setUsersRequest(res.data.users);
         setUsersTotalCount(res.data.totalCount);
         setUsersPageCount(Math.ceil(usersTotalCount / 10));
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -117,84 +121,100 @@ function UpdateGroupForm({
             onChange={onChangeHandler}
             placeholder="Details"
           ></input>
+
           <h5>Add users to group:</h5>
-          <div className="items">
-            <WrapTextContainer>
-              {usersRequest.map((user) => {
-                return (
-                  <div key={user.id}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        onChange={onSelectHandlerUser}
-                        value={user.id}
-                        checked={usersData.users.includes(user.id)}
-                      />
-                      {user.name}
-                    </label>
-                  </div>
-                );
-              })}
-            </WrapTextContainer>
+          <div className="d-flex justify-content-center">
+            {loading ? (
+              <PuffLoader />
+            ) : (
+              <WrapTextContainer>
+                {usersRequest.map((user) => {
+                  return (
+                    <div key={user.id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          onChange={onSelectHandlerUser}
+                          value={user.id}
+                          checked={usersData.users.includes(user.id)}
+                        />
+                        {user.name}
+                      </label>
+                    </div>
+                  );
+                })}
+              </WrapTextContainer>
+            )}
           </div>
-          <ReactPaginate
-            previousLabel={"<<"}
-            nextLabel={">>"}
-            breakLabel={"..."}
-            pageCount={usersPageCount ? usersPageCount : 8}
-            marginPagesDisplayed={3}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClickUsers}
-            containerClassName={"pagination justify-content-center"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
+          {!loading && (
+            <ReactPaginate
+              previousLabel={"<<"}
+              nextLabel={">>"}
+              breakLabel={"..."}
+              pageCount={usersPageCount ? usersPageCount : 8}
+              marginPagesDisplayed={3}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClickUsers}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+            />
+          )}
+
           <h5>Add wishlists to group:</h5>
-          <div className="items">
-            <WrapTextContainer>
-              {wishlistsRequest.map((wishlist) => {
-                return (
-                  <div key={wishlist.id}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        value={wishlist.id}
-                        checked={wishlistsData.wishlists.includes(wishlist.id)}
-                        onChange={onSelectHandlerWishlist}
-                      />
-                      {wishlist.name}
-                    </label>
-                  </div>
-                );
-              })}
-            </WrapTextContainer>
+          <div className="d-flex justify-content-center">
+            {loading ? (
+              <PuffLoader />
+            ) : (
+              <WrapTextContainer>
+                {wishlistsRequest.map((wishlist) => {
+                  return (
+                    <div key={wishlist.id}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          value={wishlist.id}
+                          checked={wishlistsData.wishlists.includes(
+                            wishlist.id
+                          )}
+                          onChange={onSelectHandlerWishlist}
+                        />
+                        {wishlist.name}
+                      </label>
+                    </div>
+                  );
+                })}
+              </WrapTextContainer>
+            )}
           </div>
-          <ReactPaginate
-            previousLabel={"<<"}
-            nextLabel={">>"}
-            breakLabel={"..."}
-            pageCount={wishlistsPageCount ? wishlistsPageCount : 2}
-            marginPagesDisplayed={3}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClickWishlists}
-            containerClassName={"pagination justify-content-center"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
+          {!loading && (
+            <ReactPaginate
+              previousLabel={"<<"}
+              nextLabel={">>"}
+              breakLabel={"..."}
+              pageCount={wishlistsPageCount ? wishlistsPageCount : 2}
+              marginPagesDisplayed={3}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClickWishlists}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+            />
+          )}
         </div>
 
         <button
@@ -207,7 +227,7 @@ function UpdateGroupForm({
             postGroupWishlistsHandler(id, wishlistsData);
           }}
         >
-          Update
+          Add
         </button>
       </form>
     </>

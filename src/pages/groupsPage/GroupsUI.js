@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
-import { getGroups } from "../../api/GroupsAxios";
-import Nav from "../../components/Nav";
 import WrapTextContainer from "../../components/WrapTextContainer";
-import Groups from "./Groups";
-import ModalAddGroup from "./ModalAddGroup";
+import React, { useEffect, useState } from "react";
+import { getGroups } from "../../api/GroupsAxios";
+import AddGroupModal from "./AddGroupModal";
 import { PuffLoader } from "react-spinners";
+import ReactPaginate from "react-paginate";
+import Groups from "./Groups";
 
 export default function GroupsUI() {
   const [data, setData] = useState([]);
@@ -44,7 +43,7 @@ export default function GroupsUI() {
 
   return (
     <>
-      {!loading && <ModalAddGroup setGroups={setGroups} />}
+      {!loading && <AddGroupModal setGroups={setGroups} />}
 
       <div className="d-flex justify-content-center">
         {loading ? (
@@ -72,7 +71,7 @@ export default function GroupsUI() {
           nextLinkClassName={"page-link"}
           breakClassName={"page-item"}
           breakLinkClassName={"page-link"}
-          activeClassName={"active"}
+          // activeClassName={"active"}
         />
       )}
     </>

@@ -1,9 +1,9 @@
-import React from "react";
-import { useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import OutlinedButton from "../../components/Button";
-import "./Login&Register.css";
 import { useLogin, useLoginUpdate } from "../../context/LoginContext";
+import OutlinedButton from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import { useRef, useEffect } from "react";
+import "./Login&Register.css";
+import React from "react";
 
 export default function LoginUI() {
   const { email, setEmail, password, setPassword, errMsg } = useLogin();

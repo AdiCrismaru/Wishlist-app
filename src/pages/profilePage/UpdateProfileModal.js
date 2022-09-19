@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function ProfileUpdateModal({ user, onSubmitHandler }) {
+function UpdateProfileModal({ user, onSubmitHandler }) {
   const [data, setData] = useState({
     name: user.name,
     phone: user.phone,
@@ -45,4 +45,4 @@ function ProfileUpdateModal({ user, onSubmitHandler }) {
   );
 }
 
-export default ProfileUpdateModal;
+export default UpdateProfileModal;
