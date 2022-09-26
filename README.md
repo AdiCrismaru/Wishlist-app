@@ -1,6 +1,3 @@
-✨🤩 WISHLIST APP -- SUMMER BOOTCAMP -- SOFTBINATOR TECHNOLOGIES 🤩✨
-🏆 Mentors: Stefan Pavel and Stefan Leucioiu 🏆
-
 ◼ Instructions:
 
 1.  Clone repo from GitHub.
